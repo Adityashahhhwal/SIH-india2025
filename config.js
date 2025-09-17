@@ -7,8 +7,8 @@ const CONFIG = {
         }
     },
     production: {
-        // This will be updated with your actual deployed API URL
-        API_BASE_URL: 'https://your-api-domain.com',  // Update this with your deployed API URL
+        // ✅ UPDATED: Real deployed backend URL
+        API_BASE_URL: 'https://sih-india2025.onrender.com',  // Your actual Render URL
         API_ENDPOINTS: {
             chat: '/bot/v1/message'
         }
