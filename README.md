@@ -17,59 +17,37 @@
 └── README.md              # This file
 ```ve disaster management system that provides real-time guidance, emergency resources, and AI-powered assistance for disaster preparedness and response.
 
-## 🌟 Features
+## 🤖 **AI-Powered Chatbot Features**
 
-- 🤖 **AI-Powered Chatbot** - Get instant disaster guidance and emergency assistance
-- 🌍 **Multi-Disaster Support** - Earthquakes, floods, hurricanes, wildfires, tornadoes
-- 📱 **Responsive Design** - Works on all devices and screen sizes
-- 🌐 **Offline Mode** - Continue using core features without internet
-- 🗺️ **Location Services** - Get location-specific emergency information
-- 🚨 **Emergency Contacts** - Quick access to emergency services
-- 📋 **Safety Checklists** - Comprehensive disaster preparation guides
-- 🔔 **Real-time Alerts** - Stay updated with emergency notifications
-- 🌎 **Multi-language Support** - Accessible in multiple languages
-- ♿ **Accessibility Features** - Designed for users with disabilities
+### Frontend Chatbot
+- ✅ **Smart Mock Responses** - Works offline with intelligent disaster guidance
+- ✅ **Location Services** - GPS-based emergency recommendations  
+- ✅ **Multi-Disaster Support** - Earthquakes, floods, fires, cyclones, etc.
+- ✅ **Emergency Contacts** - India-specific emergency numbers
+
+### Backend API (Optional)
+- � **OpenAI Integration** - Real AI responses via OpenRouter
+- � **GPT-5 Model** - Latest AI technology for emergency guidance
+- � **Context Memory** - Remembers conversation history
+- � **Location-Aware** - Tailored advice based on user location
+- 🔥 **MongoDB Storage** - Message history and user data
+- 🔥 **Fallback System** - Automatic mock responses if AI fails
 
 ## 🚀 Live Demo
 
-The bot is deployed and ready to use! Choose from these options:
+**Frontend**: [https://disaster-managementweb.netlify.app](https://disaster-managementweb.netlify.app)  
+**Backend**: Deploy following the guide below
 
-### Quick Deploy Links:
-- **Netlify**: [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Adityashahhhwal/SIH-india2025)
-- **Vercel**: [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Adityashahhhwal/SIH-india2025)
-- **GitHub Pages**: Available in repository settings
+## � Quick Start
 
-## 📦 Quick Start
+### Frontend Only (Mock Responses)
+The frontend is already deployed and works with intelligent mock responses.
 
-### Option 1: Deploy to Netlify (Recommended)
-
-1. **Fork this repository**
-2. **Connect to Netlify:**
-   - Go to [netlify.com](https://netlify.com)
-   - Click "New site from Git"
-   - Choose your forked repository
-   - Deploy!
-
-Your site will be live at: `https://your-site-name.netlify.app`
-
-### Option 2: Deploy to Vercel
-
-1. **Fork this repository**
-2. **Connect to Vercel:**
-   - Go to [vercel.com](https://vercel.com)
-   - Click "New Project"
-   - Import your repository
-   - Deploy!
-
-### Option 3: GitHub Pages
-
-1. **Fork this repository**
-2. **Enable GitHub Pages:**
-   - Go to repository Settings
-   - Scroll to Pages section
-   - Select source: Deploy from branch
-   - Choose `main` branch
-   - Save
+### Full Setup (AI-Powered)
+1. **Deploy Frontend**: Already live on Netlify ✅
+2. **Deploy Backend**: Follow `DEPLOY-BACKEND-NOW.md` guide
+3. **Update Config**: Add your backend URL to `config.js`
+4. **Test**: Real AI responses with OpenAI/OpenRouter integration
 
 ## 🛠️ Local Development
 
@@ -125,17 +103,26 @@ For advanced configurations, you can set:
 ## 📁 Project Structure
 
 ```
-├── index.html              # Main disaster management interface
-├── chatbot-popup.html      # Standalone chatbot page
-├── chatbot-popup.js        # Chatbot functionality
-├── config.js              # Environment configuration
-├── mock-api.js             # Offline/fallback API responses
-├── styles.css              # Main application styles
-├── simple-chatbot.css      # Chatbot-specific styles
-├── script.js               # Main application logic
-├── netlify.toml           # Netlify deployment config
-├── vercel.json            # Vercel deployment config
-└── DEPLOYMENT.md          # Detailed deployment guide
+📦 SIH-india2025/
+├── 🌐 index.html              # Main disaster management app
+├── 💬 chatbot-popup.html      # Standalone chatbot page  
+├── 🤖 chatbot-popup.js        # Chatbot functionality
+├── 📜 script.js               # Main application logic
+├── 🎨 styles.css              # Main application styles
+├── 🎨 simple-chatbot.css      # Chatbot-specific styles
+├── ⚙️ config.js               # Environment configuration
+├── 🔄 mock-api.js             # Offline/fallback API responses
+├── 🚀 netlify.toml            # Netlify deployment config
+├── 📚 DEPLOYMENT.md           # Frontend deployment guide
+├── 🛠️ DEPLOY-BACKEND-NOW.md   # Backend deployment guide
+├── 📖 README.md               # Project documentation
+└── 🖥️ backend/                # Chatbot API server
+    ├── index.js               # Express server
+    ├── package.json           # Dependencies
+    ├── .env                   # Environment variables
+    ├── controllers/           # API controllers
+    ├── models/                # Database models
+    └── routes/                # API routes
 ```
 
 ## 🌐 Supported Platforms

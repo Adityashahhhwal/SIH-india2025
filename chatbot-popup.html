@@ -6,6 +6,7 @@
     <title>Emergency Disaster Management Chatbot</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="config.js"></script>
+    <script src="mock-api.js"></script>
     <style>
         * {
             margin: 0;
@@ -287,6 +288,25 @@
                 this.loadingIndicator = document.getElementById('loadingIndicator');
                 
                 this.attachEventListeners();
+                this.checkAPIStatus();
+            }
+            
+            async checkAPIStatus() {
+                // Test if main API is reachable, if not, inform user about offline mode
+                try {
+                    const response = await fetch(this.apiUrl, { 
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ text: 'test' })
+                    });
+                } catch (error) {
+                    // API not reachable, inform user about offline mode
+                    if (window.MockChatbotAPI) {
+                        setTimeout(() => {
+                            this.addMessage('ℹ️ Running in offline mode with built-in disaster responses. All core emergency guidance is available!', 'bot');
+                        }, 1000);
+                    }
+                }
             }
 
             attachEventListeners() {
@@ -351,7 +371,23 @@
                     
                 } catch (error) {
                     console.error('Error:', error);
-                    this.addMessage('Sorry, I\'m having trouble connecting. Please make sure the chatbot server is running.', 'bot');
+                    console.log('Attempting to use mock API as fallback...');
+                    
+                    // Try mock API as fallback
+                    try {
+                        if (window.MockChatbotAPI) {
+                            const mockResponse = await window.MockChatbotAPI.sendMessage(message, locationData);
+                            if (mockResponse.success) {
+                                this.addMessage('🤖 ' + mockResponse.data.message, 'bot');
+                                this.addMessage('ℹ️ Note: Using offline mode - connect to internet for full functionality.', 'bot');
+                                return;
+                            }
+                        }
+                    } catch (mockError) {
+                        console.error('Mock API also failed:', mockError);
+                    }
+                    
+                    this.addMessage('Sorry, I\'m having trouble connecting right now. Please check your internet connection or try again later.', 'bot');
                 } finally {
                     this.isLoading = false;
                     this.updateUI();

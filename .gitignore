@@ -1,0 +1,43 @@
+# Backend Dependencies
+backend/node_modules/
+backend/npm-debug.log*
+backend/yarn-debug.log*
+backend/yarn-error.log*
+
+# Logs
+backend/logs
+backend/*.log
+
+# Runtime data
+backend/pids
+backend/*.pid
+backend/*.seed
+backend/*.pid.lock
+
+# Coverage directory
+backend/coverage/
+
+# Optional npm cache directory
+backend/.npm
+
+# Environment variables (keep .env for Railway)
+# backend/.env
+
+# Parcel cache
+backend/.cache
+backend/.parcel-cache
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

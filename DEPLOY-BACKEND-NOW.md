@@ -8,7 +8,7 @@
 2. **Sign in with GitHub**
 3. **Create New Project** → "Deploy from GitHub repo"
 4. **Select** your repository: `Adityashahhhwal/SIH-india2025`
-5. **Choose** the folder: `chatbot-main/DisasterManagement-bot/backend`
+5. **Choose** the folder: `backend`
 
 ### Step 2: Set Environment Variables
 
@@ -52,7 +52,7 @@ Visit `https://disaster-managementweb.netlify.app` and test the chatbot - it wil
 If Railway doesn't work, use [Render.com](https://render.com):
 
 1. **New Web Service** from GitHub
-2. **Root Directory**: `chatbot-main/DisasterManagement-bot/backend`
+2. **Root Directory**: `backend`
 3. **Build Command**: `npm install`
 4. **Start Command**: `npm start`
 5. **Add Environment Variables** (same as above)
