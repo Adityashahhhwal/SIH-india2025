@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Natural Disaster Response Navigator</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="simple-chatbot.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="config.js"></script>
@@ -20,7 +19,6 @@
                 <span>DisasterAI</span>
             </div>
             <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">Home</a></li>
                 <li class="dropdown">
                     <a href="#" class="nav-link dropdown-toggle">
                         <i class="fas fa-exclamation-triangle"></i> Prepare <i class="fas fa-chevron-down"></i>
@@ -84,8 +82,6 @@
                         <a href="#offline">Offline Mode</a>
                     </div>
                 </li>
-                <li><button id="signin-btn" class="nav-link auth-btn">Sign In</button></li>
-                <li><button id="signup-btn" class="nav-link auth-btn">Sign Up</button></li>
             </ul>
             <div class="hamburger">
                 <span class="bar"></span>
@@ -1271,7 +1267,7 @@
             <div class="emergency-grid">
                 <div class="emergency-category">
                     <h3><i class="fas fa-shield-alt"></i> Emergency Services</h3>
-                    <div class="number-list">
+                    <div class="number-list" data-contact-category="emergency">
                         <div class="number-item critical">
                             <div class="number-icon">
                                 <i class="fas fa-phone"></i>
@@ -1306,7 +1302,7 @@
                 </div>
                 <div class="emergency-category">
                     <h3><i class="fas fa-ambulance"></i> Medical Services</h3>
-                    <div class="number-list">
+                    <div class="number-list" data-contact-category="medical">
                         <div class="number-item">
                             <div class="number-icon">
                                 <i class="fas fa-hospital"></i>
@@ -1341,7 +1337,7 @@
                 </div>
                 <div class="emergency-category">
                     <h3><i class="fas fa-exclamation-triangle"></i> Disaster Response</h3>
-                    <div class="number-list">
+                    <div class="number-list" data-contact-category="disaster">
                         <div class="number-item">
                             <div class="number-icon">
                                 <i class="fas fa-building"></i>
@@ -1374,6 +1370,14 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <!-- Emergency Alert Button -->
+            <div class="emergency-alert-section" style="margin-top: 2rem; text-align: center;">
+                <button id="emergency-alert-btn" class="btn btn-danger" style="padding: 1rem 2rem; font-size: 1.2rem; font-weight: bold;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Send Emergency Alert
+                </button>
+                <p style="color: #666; margin-top: 0.5rem;">Alert authorities and emergency contacts</p>
             </div>
         </div>
     </section>
@@ -4325,180 +4329,81 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2024 DisasterAI. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+            </div
 
-    <script src="script.js"></script>
-
-    <!-- Authentication Modals -->
-    <!-- Sign In Modal -->
-    <div id="signin-modal" class="auth-modal">
-        <div class="auth-modal-content">
-            <div class="auth-modal-header">
-                <h2><i class="fas fa-sign-in-alt"></i> Sign In</h2>
-                <span class="auth-close" id="signin-close">&times;</span>
+    <!-- Personal Contacts Management Modal -->
+    <div id="personal-contacts-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Manage Personal Emergency Contacts</h2>
+                <span class="close">&times;</span>
             </div>
-            <div class="auth-modal-body">
-                <form id="signin-form" class="auth-form">
-                    <div class="auth-tabs">
-                        <button type="button" class="auth-tab active" data-tab="email-signin">Email</button>
-                        <button type="button" class="auth-tab" data-tab="phone-signin">Phone</button>
-                    </div>
-                    
-                    <!-- Email Sign In -->
-                    <div id="email-signin" class="auth-tab-content active">
-                        <div class="form-group">
-                            <label for="signin-email">Email Address</label>
-                            <input type="email" id="signin-email" name="email" required>
-                            <i class="fas fa-envelope form-icon"></i>
-                        </div>
-                        <div class="form-group">
-                            <label for="signin-password">Password</label>
-                            <input type="password" id="signin-password" name="password" required>
-                            <i class="fas fa-lock form-icon"></i>
-                        </div>
-                    </div>
-                    
-                    <!-- Phone Sign In -->
-                    <div id="phone-signin" class="auth-tab-content">
-                        <div class="form-group">
-                            <label for="signin-phone">Phone Number</label>
-                            <input type="tel" id="signin-phone" name="phone" placeholder="+1 (555) 123-4567" required>
-                            <i class="fas fa-phone form-icon"></i>
-                        </div>
-                        <div class="form-group">
-                            <label for="signin-otp">Verification Code</label>
-                            <input type="text" id="signin-otp" name="otp" placeholder="Enter 6-digit code" maxlength="6">
-                            <i class="fas fa-key form-icon"></i>
-                            <button type="button" id="send-otp-signin" class="otp-btn">Send Code</button>
-                        </div>
-                    </div>
-                    
+            <div class="modal-body">
+                <form id="add-contact-form">
                     <div class="form-group">
-                        <label class="remember-me">
-                            <input type="checkbox" id="remember-me">
-                            <span class="checkmark"></span>
-                            Remember me
-                        </label>
+                        <label for="contact-name">Name:</label>
+                        <input type="text" id="contact-name" required>
                     </div>
-                    
-                    <button type="submit" class="auth-submit-btn">
-                        <i class="fas fa-sign-in-alt"></i> Sign In
-                    </button>
-                    
-                    <div class="auth-links">
-                        <a href="#" id="forgot-password">Forgot Password?</a>
-                        <p>Don't have an account? <a href="#" id="switch-to-signup">Sign Up</a></p>
+                    <div class="form-group">
+                        <label for="contact-phone">Phone:</label>
+                        <input type="tel" id="contact-phone" required>
                     </div>
+                    <div class="form-group">
+                        <label for="contact-relationship">Relationship:</label>
+                        <select id="contact-relationship" required>
+                            <option value="">Select relationship</option>
+                            <option value="family">Family</option>
+                            <option value="friend">Friend</option>
+                            <option value="neighbor">Neighbor</option>
+                            <option value="doctor">Doctor</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Contact</button>
                 </form>
+                <div id="personal-contacts-list">
+                    <h3>Your Emergency Contacts</h3>
+                    <div id="contacts-display"></div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Sign Up Modal -->
-    <div id="signup-modal" class="auth-modal">
-        <div class="auth-modal-content">
-            <div class="auth-modal-header">
-                <h2><i class="fas fa-user-plus"></i> Sign Up</h2>
-                <span class="auth-close" id="signup-close">&times;</span>
+    <!-- Emergency Alert Modal -->
+    <div id="emergency-alert-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Emergency Alert</h2>
+                <span class="close">&times;</span>
             </div>
-            <div class="auth-modal-body">
-                <form id="signup-form" class="auth-form">
-                    <div class="auth-tabs">
-                        <button type="button" class="auth-tab active" data-tab="email-signup">Email</button>
-                        <button type="button" class="auth-tab" data-tab="phone-signup">Phone</button>
-                    </div>
-                    
-                    <!-- Email Sign Up -->
-                    <div id="email-signup" class="auth-tab-content active">
-                        <div class="form-group">
-                            <label for="signup-name">Full Name</label>
-                            <input type="text" id="signup-name" name="name" required>
-                            <i class="fas fa-user form-icon"></i>
-                        </div>
-                        <div class="form-group">
-                            <label for="signup-email">Email Address</label>
-                            <input type="email" id="signup-email" name="email" required>
-                            <i class="fas fa-envelope form-icon"></i>
-                        </div>
-                        <div class="form-group">
-                            <label for="signup-password">Password</label>
-                            <input type="password" id="signup-password" name="password" required>
-                            <i class="fas fa-lock form-icon"></i>
-                        </div>
-                        <div class="form-group">
-                            <label for="signup-confirm-password">Confirm Password</label>
-                            <input type="password" id="signup-confirm-password" name="confirmPassword" required>
-                            <i class="fas fa-lock form-icon"></i>
-                        </div>
-                    </div>
-                    
-                    <!-- Phone Sign Up -->
-                    <div id="phone-signup" class="auth-tab-content">
-                        <div class="form-group">
-                            <label for="signup-name-phone">Full Name</label>
-                            <input type="text" id="signup-name-phone" name="name" required>
-                            <i class="fas fa-user form-icon"></i>
-                        </div>
-                        <div class="form-group">
-                            <label for="signup-phone">Phone Number</label>
-                            <input type="tel" id="signup-phone" name="phone" placeholder="+1 (555) 123-4567" required>
-                            <i class="fas fa-phone form-icon"></i>
-                        </div>
-                        <div class="form-group">
-                            <label for="signup-otp">Verification Code</label>
-                            <input type="text" id="signup-otp" name="otp" placeholder="Enter 6-digit code" maxlength="6">
-                            <i class="fas fa-key form-icon"></i>
-                            <button type="button" id="send-otp-signup" class="otp-btn">Send Code</button>
-                        </div>
-                    </div>
-                    
+            <div class="modal-body">
+                <div class="alert-form">
+                    <h3>Send Emergency Alert</h3>
+                    <p>This will immediately notify authorities and your emergency contacts</p>
                     <div class="form-group">
-                        <label class="terms-checkbox">
-                            <input type="checkbox" id="agree-terms" required>
-                            <span class="checkmark"></span>
-                            I agree to the <a href="#" id="terms-link">Terms of Service</a> and <a href="#" id="privacy-link">Privacy Policy</a>
-                        </label>
+                        <label for="alert-type">Emergency Type:</label>
+                        <select id="alert-type" required>
+                            <option value="">Select emergency type</option>
+                            <option value="medical">Medical Emergency</option>
+                            <option value="fire">Fire</option>
+                            <option value="natural-disaster">Natural Disaster</option>
+                            <option value="crime">Crime in Progress</option>
+                            <option value="other">Other Emergency</option>
+                        </select>
                     </div>
-                    
-                    <button type="submit" class="auth-submit-btn">
-                        <i class="fas fa-user-plus"></i> Create Account
-                    </button>
-                    
-                    <div class="auth-links">
-                        <p>Already have an account? <a href="#" id="switch-to-signin">Sign In</a></p>
+                    <div class="form-group">
+                        <label for="alert-message">Additional Information:</label>
+                        <textarea id="alert-message" placeholder="Describe the emergency..."></textarea>
                     </div>
-                </form>
+                    <div class="alert-actions">
+                        <button type="button" class="btn btn-danger" id="send-alert-btn">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Send Alert Now
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="cancel-alert-btn">Cancel</button>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <!-- User Profile Dropdown (shown when logged in) -->
-    <div id="user-profile-dropdown" class="user-dropdown" style="display: none;">
-        <div class="user-info">
-            <div class="user-avatar">
-                <i class="fas fa-user-circle"></i>
-            </div>
-            <div class="user-details">
-                <span class="user-name" id="user-display-name">User Name</span>
-                <span class="user-email" id="user-display-email">user@example.com</span>
-            </div>
-        </div>
-        <div class="user-menu">
-            <a href="#" class="user-menu-item" id="profile-settings">
-                <i class="fas fa-cog"></i> Profile Settings
-            </a>
-            <a href="#" class="user-menu-item" id="emergency-contacts">
-                <i class="fas fa-address-book"></i> Emergency Contacts
-            </a>
-            <a href="#" class="user-menu-item" id="saved-locations">
-                <i class="fas fa-map-marker-alt"></i> Saved Locations
-            </a>
-            <hr class="user-menu-divider">
-            <a href="#" class="user-menu-item" id="logout-btn">
-                <i class="fas fa-sign-out-alt"></i> Sign Out
-            </a>
         </div>
     </div>
 
