@@ -188,7 +188,7 @@ class ChatbotPopup {
             // Try mock API as fallback
             try {
                 if (window.MockChatbotAPI) {
-                    const mockResponse = await window.MockChatbotAPI.sendMessage(message, locationData);
+                    const mockResponse = await window.MockChatbotAPI.sendMessage(messageToSend, locationData);
                     if (mockResponse.success) {
                         this.addMessage('🤖 ' + mockResponse.data.message, 'bot');
                         this.addMessage('ℹ️ Note: Using offline mode - connect to internet for full functionality.', 'bot');
