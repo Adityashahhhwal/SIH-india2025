@@ -1,8 +1,21 @@
 # SIH-india2025 - AI Disaster Management Bot
 
 🚨 **Emergency Disaster Response Navigator with AI Chatbot**
+## 📁 Project Structure
 
-A comprehensive disaster management system that provides real-time guidance, emergency resources, and AI-powered assistance for disaster preparedness and response.
+```
+├── index.html              # Main disaster management interface
+├── chatbot-popup.html      # Standalone chatbot page
+├── chatbot-popup.js        # Chatbot functionality
+├── script.js               # Main application logic
+├── styles.css              # Main application styles
+├── simple-chatbot.css      # Chatbot-specific styles
+├── config.js               # Environment configuration
+├── mock-api.js             # Offline/fallback API responses
+├── netlify.toml           # Netlify deployment config
+├── DEPLOYMENT.md          # Detailed deployment guide
+└── README.md              # This file
+```ve disaster management system that provides real-time guidance, emergency resources, and AI-powered assistance for disaster preparedness and response.
 
 ## 🌟 Features
 
@@ -22,8 +35,9 @@ A comprehensive disaster management system that provides real-time guidance, eme
 The bot is deployed and ready to use! Choose from these options:
 
 ### Quick Deploy Links:
-- **Netlify**: [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/your-username/SIH-india2025)
-- **Vercel**: [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/SIH-india2025)
+- **Netlify**: [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Adityashahhhwal/SIH-india2025)
+- **Vercel**: [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Adityashahhhwal/SIH-india2025)
+- **GitHub Pages**: Available in repository settings
 
 ## 📦 Quick Start
 
