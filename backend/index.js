@@ -46,6 +46,8 @@ app.get("/health", (req, res) => {
   });
 });
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`Server is Running on Port ${port}`)
+  console.log(`Health check available at: http://localhost:${port}/health`)
+  console.log(`API available at: http://localhost:${port}/bot/v1/message`)
 })
