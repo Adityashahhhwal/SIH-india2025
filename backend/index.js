@@ -29,6 +29,23 @@ if (process.env.MONGO_URI) {
 // Defining Routes
 app.use("/bot/v1/", chatbotRoutes)
 
+// Health check endpoint
+app.get("/", (req, res) => {
+  res.json({ 
+    status: "OK", 
+    message: "Disaster Management Bot API is running",
+    timestamp: new Date().toISOString()
+  });
+});
+
+app.get("/health", (req, res) => {
+  res.json({ 
+    status: "healthy", 
+    service: "disaster-chatbot-api",
+    timestamp: new Date().toISOString()
+  });
+});
+
 app.listen(port, () => {
   console.log(`Server is Running on Port ${port}`)
 })
