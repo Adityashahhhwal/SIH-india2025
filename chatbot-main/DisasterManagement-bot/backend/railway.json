@@ -1,0 +1,14 @@
+{
+  "name": "disaster-management-chatbot-api",
+  "description": "AI-powered disaster management chatbot backend with OpenAI integration",
+  "keywords": ["chatbot", "disaster-management", "openai", "emergency", "nodejs"],
+  "website": "https://disaster-managementweb.netlify.app",
+  "repository": "https://github.com/Adityashahhhwal/SIH-india2025",
+  "buildCommand": "npm install",
+  "startCommand": "npm start",
+  "healthcheckPath": "/",
+  "environmentVariables": {
+    "PORT": 4002,
+    "NODE_ENV": "production"
+  }
+}
