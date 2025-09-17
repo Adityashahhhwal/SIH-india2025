@@ -4,7 +4,10 @@ class ChatbotPopup {
         this.messages = [];
         this.isLoading = false;
         this.isMinimized = false;
-        this.apiUrl = 'http://localhost:4002/bot/v1/message';
+        // Use configuration-based API URL
+        this.apiUrl = window.AppConfig ? 
+            window.AppConfig.API_BASE_URL + window.AppConfig.API_ENDPOINTS.chat : 
+            'http://localhost:4002/bot/v1/message';
         
         this.initializeElements();
         this.attachEventListeners();
@@ -180,7 +183,23 @@ class ChatbotPopup {
             
         } catch (error) {
             console.error('Error sending message:', error);
-            this.addMessage('Sorry, I\'m having trouble connecting right now. Please check if the chatbot server is running and try again.', 'bot');
+            console.log('Attempting to use mock API as fallback...');
+            
+            // Try mock API as fallback
+            try {
+                if (window.MockChatbotAPI) {
+                    const mockResponse = await window.MockChatbotAPI.sendMessage(message, locationData);
+                    if (mockResponse.success) {
+                        this.addMessage('🤖 ' + mockResponse.data.message, 'bot');
+                        this.addMessage('ℹ️ Note: Using offline mode - connect to internet for full functionality.', 'bot');
+                        return;
+                    }
+                }
+            } catch (mockError) {
+                console.error('Mock API also failed:', mockError);
+            }
+            
+            this.addMessage('Sorry, I\'m having trouble connecting right now. Please check your internet connection or try again later.', 'bot');
         } finally {
             this.isLoading = false;
             this.showLoading(false);

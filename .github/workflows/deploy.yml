@@ -1,0 +1,40 @@
+name: Deploy Disaster Management Bot
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies (if any)
+      run: |
+        if [ -f package.json ]; then
+          npm install
+        fi
+        
+    - name: Build project (if needed)
+      run: |
+        # Add any build steps here if needed
+        echo "Static site - no build required"
+        
+    - name: Deploy to Netlify
+      uses: netlify/actions/cli@master
+      if: github.ref == 'refs/heads/main'
+      with:
+        args: deploy --prod --dir .
+      env:
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
