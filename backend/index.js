@@ -10,7 +10,7 @@ import chatbotRoutes from './routes/chatbot.route.js';
 const app = express()
 dotenv.config()
 
-const port =process.env.PORT || 3000
+const port =process.env.PORT || 4002
 
 // middleware
 app.use(express.json({ limit: '100kb' }));
