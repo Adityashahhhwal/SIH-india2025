@@ -20,8 +20,13 @@ backend/coverage/
 # Optional npm cache directory
 backend/.npm
 
-# Environment variables (keep .env for Railway)
-# backend/.env
+# Environment variables
+backend/.env
+backend/.env.local
+
+# Frontend build artifacts
+dist/
+build/
 
 # Parcel cache
 backend/.cache

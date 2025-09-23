@@ -5,7 +5,8 @@
   "scripts": {
     "build": "cd backend && npm install --production",
     "start": "cd backend && npm start",
-    "dev": "cd backend && npm run dev"
+    "dev": "cd backend && npm run dev",
+    "serve": "npx http-server . -p 3000 -o"
   },
   "repository": {
     "type": "git",

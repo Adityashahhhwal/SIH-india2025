@@ -1,0 +1,75 @@
+openapi: 3.0.3
+info:
+  title: Disaster Management Chatbot API
+  version: 1.0.0
+  description: Chat endpoint for AI-powered disaster guidance.
+servers:
+  - url: http://localhost:4002
+paths:
+  /bot/v1/message:
+    post:
+      summary: Send a chat message and receive a bot reply
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  minLength: 1
+                  maxLength: 2000
+                history:
+                  type: array
+                  maxItems: 20
+                  items:
+                    type: object
+                    properties:
+                      role:
+                        type: string
+                      content:
+                        type: string
+                      sender:
+                        type: string
+                      text:
+                        type: string
+                location:
+                  type: object
+                  properties:
+                    latitude: { type: number }
+                    longitude: { type: number }
+                    accuracy: { type: number }
+                    address: { type: string }
+                    city: { type: string }
+                    country: { type: string }
+                    timestamp: { type: string }
+      responses:
+        '200':
+          description: Bot response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userMessage: { type: string }
+                  botMessage: { type: string }
+                  locationReceived: { type: boolean }
+                  currentTime:
+                    type: object
+                    properties:
+                      date: { type: string }
+                      time: { type: string }
+                      timestamp: { type: string }
+                      dayOfWeek: { type: integer }
+                      hour: { type: integer }
+                      timezone: { type: string }
+                  modelRequested: { type: string }
+                  modelResolved: { type: string, nullable: true }
+                  baseURL: { type: string }
+                  fallback: { type: boolean }
+                  error: { type: string, nullable: true }
+        '400':
+          description: Invalid request
+        '500':
+          description: Server error
