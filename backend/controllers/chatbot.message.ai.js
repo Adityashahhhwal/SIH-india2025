@@ -1,5 +1,3 @@
-import Bot from "../models/bot.model.js";
-import User from "../models/user.model.js";
 import { OpenAI } from 'openai';
 
 export const Message = async (req, res) => {
@@ -15,10 +13,10 @@ export const Message = async (req, res) => {
       throw new Error("Missing OPENAI_API_KEY in environment");
     }
     const openai = new OpenAI({
-      baseURL: process.env.OPENAI_BASE_URL || "https://openrouter.ai/api/v1",
+      baseURL: "https://openrouter.ai/api/v1",
       apiKey: process.env.OPENAI_API_KEY,
       defaultHeaders: {
-        "HTTP-Referer": process.env.OPENAI_HTTP_REFERER || "http://localhost:4002",
+        "HTTP-Referer": process.env.OPENAI_HTTP_REFERER || "https://disaster-managementweb.netlify.app",
         "X-Title": process.env.OPENAI_X_TITLE || "Disaster Management Bot",
       }
     });
@@ -88,7 +86,7 @@ FORMATTING RULES:
     }
 
     try {
-      const model = process.env.OPENAI_MODEL || "openai/gpt-5-chat";
+      const model = process.env.OPENAI_MODEL || "x-ai/grok-4-fast:free";
       // Call OpenAI API
       // Build chat history (lightweight memory)
       const historyItems = Array.isArray(history) ? history : [];

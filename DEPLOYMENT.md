@@ -30,7 +30,7 @@ If you don't have a backend ready, the chatbot will show mock responses.
    - Build command: (leave empty)
    - Publish directory: `/` (root)
 4. **Deploy!**
-
+If you don't have a backend ready, on localhost the chatbot will load `mock-api.js` and show smart offline responses.
 Your site will be available at: `https://your-site-name.netlify.app`
 
 ### 2. Deploy Backend API
@@ -73,6 +73,7 @@ The app automatically detects the environment:
 - ✅ Accessibility features
 
 ## Files Structure
+On localhost, `mock-api.js` is loaded automatically to provide offline responses. In production, only the real API is used.
 
 ```
 ├── index.html              # Main application
@@ -90,7 +91,6 @@ The app automatically detects the environment:
 2. Deploy the frontend
 3. If you have a backend API, deploy it and update config.js
 4. Test the deployed application
-5. Share your live URL!
 
 ## Support
 

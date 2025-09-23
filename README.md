@@ -5,17 +5,19 @@
 
 ```
 ├── index.html              # Main disaster management interface
-├── chatbot-popup.html      # Standalone chatbot page
-├── chatbot-popup.js        # Chatbot functionality
+├── chatbot-popup.html      # Standalone chatbot page (inline JS)
 ├── script.js               # Main application logic
 ├── styles.css              # Main application styles
-├── simple-chatbot.css      # Chatbot-specific styles
 ├── config.js               # Environment configuration
-├── mock-api.js             # Offline/fallback API responses
-├── netlify.toml           # Netlify deployment config
-├── DEPLOYMENT.md          # Detailed deployment guide
-└── README.md              # This file
-```ve disaster management system that provides real-time guidance, emergency resources, and AI-powered assistance for disaster preparedness and response.
+├── mock-api.js             # Offline/fallback API responses (dev only)
+├── sw.js                   # Service worker stub (prevents 404s)
+├── favicon.ico             # Favicon placeholder
+├── netlify.toml            # Netlify deployment config
+├── DEPLOYMENT.md           # Detailed deployment guide
+└── README.md               # This file
+```
+
+A responsive disaster management system that provides real-time guidance, emergency resources, and AI-powered assistance for disaster preparedness and response.
 
 ## 🤖 **AI-Powered Chatbot Features**
 
@@ -38,7 +40,7 @@
 **Frontend**: [https://disaster-managementweb.netlify.app](https://disaster-managementweb.netlify.app)  
 **Backend**: Deploy following the guide below
 
-## � Quick Start
+## ⚡ Quick Start
 
 ### Frontend Only (Mock Responses)
 The frontend is already deployed and works with intelligent mock responses.
@@ -57,8 +59,12 @@ The frontend is already deployed and works with intelligent mock responses.
    cd SIH-india2025
    ```
 
-2. **Open in browser:**
-   - Simply open `index.html` in your web browser
+2. **Run locally:**
+   - Easiest (Node):
+   ```bash
+   npm run serve
+   ```
+   - Or open `index.html` directly in a browser
    - Or use a local server:
    ```bash
    # Using Python
@@ -69,8 +75,9 @@ The frontend is already deployed and works with intelligent mock responses.
    ```
 
 3. **Access the application:**
-   - Main app: `http://localhost:8000`
-   - Chatbot only: `http://localhost:8000/chatbot-popup.html`
+   - If using `npm run serve`: `http://localhost:3000`
+   - Python example: `http://localhost:8000`
+   - Chatbot page: `/chatbot-popup.html`
 
 ## 🔧 Configuration
 
@@ -78,8 +85,8 @@ The frontend is already deployed and works with intelligent mock responses.
 
 The bot automatically detects the environment:
 
-- **Development** (localhost): Uses mock API responses
-- **Production** (deployed): Configure your API URL in `config.js`
+- Development (localhost): Loads `mock-api.js` and uses offline responses
+- Production (deployed): Uses your backend API (configure in `config.js`)
 
 To connect a real backend API:
 
@@ -94,35 +101,43 @@ To connect a real backend API:
    }
    ```
 
-### Environment Variables (Optional)
+### Backend Environment Variables
 
-For advanced configurations, you can set:
-- `API_URL` - Custom API endpoint
-- `ENVIRONMENT` - Force environment (development/production)
+Copy `backend/.env.example` to `backend/.env` and fill real values:
+
+```
+PORT=4002
+MONGO_URI="<your-mongodb-uri>"
+OPENAI_API_KEY=<your-openrouter-api-key>
+OPENAI_BASE_URL="https://openrouter.ai/api/v1"
+OPENAI_MODEL=x-ai/grok-4-fast:free
+OPENAI_HTTP_REFERER="https://your-frontend-domain"
+OPENAI_X_TITLE="Disaster Management Bot"
+```
 
 ## 📁 Project Structure
 
 ```
 📦 SIH-india2025/
 ├── 🌐 index.html              # Main disaster management app
-├── 💬 chatbot-popup.html      # Standalone chatbot page  
-├── 🤖 chatbot-popup.js        # Chatbot functionality
+├── 💬 chatbot-popup.html      # Standalone chatbot page
 ├── 📜 script.js               # Main application logic
 ├── 🎨 styles.css              # Main application styles
-├── 🎨 simple-chatbot.css      # Chatbot-specific styles
 ├── ⚙️ config.js               # Environment configuration
-├── 🔄 mock-api.js             # Offline/fallback API responses
+├── 🔄 mock-api.js             # Offline/fallback API responses (dev only)
+├── 🧭 sw.js                   # No-op service worker
+├── 🖼️ favicon.ico             # Favicon
 ├── 🚀 netlify.toml            # Netlify deployment config
 ├── 📚 DEPLOYMENT.md           # Frontend deployment guide
 ├── 🛠️ DEPLOY-BACKEND-NOW.md   # Backend deployment guide
 ├── 📖 README.md               # Project documentation
 └── 🖥️ backend/                # Chatbot API server
-    ├── index.js               # Express server
-    ├── package.json           # Dependencies
-    ├── .env                   # Environment variables
-    ├── controllers/           # API controllers
-    ├── models/                # Database models
-    └── routes/                # API routes
+   ├── index.js               # Express server
+   ├── package.json           # Dependencies
+   ├── .env.example           # Example env file
+   ├── controllers/           # API controllers
+   ├── models/                # Database models
+   └── routes/                # API routes
 ```
 
 ## 🌐 Supported Platforms
