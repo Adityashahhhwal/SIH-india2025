@@ -115,6 +115,20 @@ OPENAI_HTTP_REFERER="https://your-frontend-domain"
 OPENAI_X_TITLE="Disaster Management Bot"
 ```
 
+### Automated Testing with TestSprite
+
+TestSprite’s MCP server is already included as a dev dependency. To use it safely:
+
+1. **Set your API key once:**
+   ```powershell
+   setx TESTSPRITE_API_KEY "your-testsprite-api-key"
+   ```
+   Restart your IDE or terminal afterwards so the variable is available.
+2. **Configure your IDE:** Copy `testsprite.mcp.config.example.json` to your MCP settings location (for example `~/.cursor/mcp.json` or the VS Code MCP config) and replace the `$TESTSPRITE_API_KEY` placeholder with `${TESTSPRITE_API_KEY}` if your IDE supports shell expansion.
+3. **Launch the assistant:** Reopen your IDE, drag this workspace into the chat panel, and ask “Help me test this project with TestSprite.”
+
+Need more detail? The full MCP setup guide lives at [docs.testsprite.com](https://docs.testsprite.com/).
+
 ## 📁 Project Structure
 
 ```

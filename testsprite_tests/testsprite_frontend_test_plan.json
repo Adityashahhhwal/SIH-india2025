@@ -1,0 +1,302 @@
+[
+  {
+    "id": "TC001",
+    "title": "AI Chatbot API - Valid Message Submission",
+    "description": "Verify that the AI chatbot API processes valid messages correctly and returns contextually accurate responses with timestamps.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Send a valid POST request to /bot/v1/message with a text message, valid location object, and an optional conversation history array."
+      },
+      {
+        "type": "assertion",
+        "description": "Receive HTTP 200 response with JSON containing a non-empty AI-generated response string and a valid ISO 8601 timestamp."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that the response message contextually relates to the submitted disaster management query."
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "AI Chatbot API - Missing Required Text Parameter",
+    "description": "Ensure that the chatbot API properly handles requests missing the required 'text' field with appropriate error messaging and status code.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Send a POST request to /bot/v1/message with an empty payload or payload missing the 'text' property."
+      },
+      {
+        "type": "assertion",
+        "description": "Receive HTTP 400 Bad Request status with an error message specifying the missing 'text' parameter."
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "Frontend Interface - Real-Time Emergency Data Display",
+    "description": "Verify that the frontend dashboard correctly renders real-time emergency alerts, contacts, and checklists responsive to data updates.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Load the main disaster management frontend page."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm emergency alerts, contacts, and checklist UI elements are visible and populated."
+      },
+      {
+        "type": "action",
+        "description": "Simulate incoming update event with changed emergency data."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the frontend interface updates data displays dynamically and maintains correct responsiveness."
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "Chatbot Popup Interface - Send and Receive Messages",
+    "description": "Ensure that the standalone chatbot popup allows users to send queries, handles backend responses, and displays conversation history properly.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open chatbot popup interface."
+      },
+      {
+        "type": "action",
+        "description": "Enter a valid disaster-related query in the input field and submit."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm the message is sent to the backend and the AI-generated response appears in chat with correct timestamp."
+      },
+      {
+        "type": "action",
+        "description": "Scroll the chat history up and down."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that historical messages are retained and displayed consistently in order."
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Offline Fallback - Mock API Responses when Backend Unreachable",
+    "description": "Validate that when the backend API is unavailable, the client-side mock API fallback activates automatically and returns intelligent disaster management responses.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Simulate backend /bot/v1/message endpoint downtime by disabling API."
+      },
+      {
+        "type": "action",
+        "description": "Send messages via chatbot interface."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that mock-api.js triggers offline mode and receives mock responses within expected context."
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure that mock responses are sensible, contextually relevant, and formatted like live backend responses."
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "MongoDB User and Bot Message History Storage",
+    "description": "Test that user and bot messages are stored in MongoDB with accurate timestamps and data integrity and can be retrieved properly.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Send a chat message to the AI chatbot API."
+      },
+      {
+        "type": "action",
+        "description": "Check MongoDB user and bot message collections for the inserted records."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify each message record has properly formatted timestamp, correct sender role, and message content matches sent/received text."
+      },
+      {
+        "type": "action",
+        "description": "Retrieve chat history from the database via API or frontend call."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm that the returned history matches stored data and maintains correct order."
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Environment Configuration - Auto Endpoint Switching",
+    "description": "Validate that the frontend automatically switches API endpoints correctly between development (localhost) and production environments.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Run the frontend locally with localhost in URL."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm that API calls point to development backend endpoints."
+      },
+      {
+        "type": "action",
+        "description": "Deploy frontend in production environment URL."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify API calls target production backend endpoints."
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Accessibility Features - Voice Activation and Screen Reader Compatibility",
+    "description": "Verify voice activation features perform commands as expected and that screen reader support correctly announces dynamic updates and interactive elements.",
+    "category": "accessibility",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Enable voice activation on the interface."
+      },
+      {
+        "type": "action",
+        "description": "Speak common disaster-related commands or queries."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm system recognizes and processes voice commands accurately."
+      },
+      {
+        "type": "action",
+        "description": "Enable a screen reader and navigate to emergency checklist and chatbot interface."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that all interactive elements and dynamic chatbot responses are properly announced and accessible."
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Multilingual Support - Translation and Emergency Phrases",
+    "description": "Ensure the platform correctly translates UI and emergency phrases into supported languages and that translation accuracy meets requirements.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Select different supported languages on the frontend interface."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify UI text, chatbot responses, and emergency phrases update accordingly."
+      },
+      {
+        "type": "action",
+        "description": "Send a message requesting common emergency phrases in a chosen language."
+      },
+      {
+        "type": "assertion",
+        "description": "Check chatbot response phrases are translated correctly."
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Simulation Mode - Emergency Preparedness Drill Functionality",
+    "description": "Test the simulation mode that runs emergency scenario drills, validating scenario accuracy, timer functionality, and user guidance flows.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Activate simulation mode from the interface."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify drill scenarios load correctly with appropriate instructions and timers."
+      },
+      {
+        "type": "action",
+        "description": "Interact with drill steps and follow prompts."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm responses update appropriately and final drill completion status is accurately reflected."
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "AI Hazard Prediction and AR Navigation Features",
+    "description": "Validate the AI-powered hazard prediction and AR navigation overlays display correct hazard data and map navigation aids based on live aerial/satellite data.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Enable hazard prediction feature and AR navigation."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify hazard risk areas and predicted events are shown on map overlays."
+      },
+      {
+        "type": "action",
+        "description": "Use AR navigation to locate emergency resources."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm navigation routes and landmarks update responsively with realistic aerial/satellite data."
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Deployment Guide Validation - Backend and Frontend Quick Start",
+    "description": "Ensure that deployment documentation and scripts enable rapid and error-free deployment on Railway, Render, and Netlify platforms.",
+    "category": "functional",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Follow deployment guides to deploy backend on Railway or Render."
+      },
+      {
+        "type": "assertion",
+        "description": "Backend service starts without errors and exposes required API endpoints."
+      },
+      {
+        "type": "action",
+        "description": "Deploy frontend on Netlify using provided instructions."
+      },
+      {
+        "type": "assertion",
+        "description": "Frontend loads correctly, automatically configures environment, and connects to backend."
+      }
+    ]
+  }
+]

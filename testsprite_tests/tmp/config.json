@@ -1,0 +1,17 @@
+{
+  "status": "init",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:3000",
+  "backendAuthType": "public",
+  "executionArgs": {
+    "projectName": "SIH-india2025",
+    "projectPath": "C:\\Users\\user\\Documents\\GitHub\\SIH-india2025",
+    "testIds": [],
+    "additionalInstruction": "Re-run all tests to verify that the frontend routing fixes are working. The HTTP server is now properly serving the disaster management interface at http://localhost:3000. Focus on testing the frontend interface accessibility, chatbot functionality, and user interaction flows.",
+    "envs": {
+      "API_KEY": "sk-user-YwrZ409F1EQgTc6VG4Igzaa3xh1e259ckLohqIT4MnpTyFNJPWAPjYwclcFnxmmSUOjZi0TfRXRDo55tkWcXrQYe3MCb0C_MRrlIYn-13bp0aFz5uvH9zL_3Of57Neb04eY"
+    }
+  },
+  "proxy": "http://80779501-1864-4d06-bb0f-a159d56dc75c:HHnmbJaXnEZWR1Qjeux2McIefKD41xZg@tun.testsprite.com:8080"
+}

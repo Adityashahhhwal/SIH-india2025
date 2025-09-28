@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { border: 1px solid #ccc; padding: 15px; margin: 10px 0; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+        button { padding: 10px 20px; margin: 5px; }
+        #response { background: #f5f5f5; padding: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>🤖 Chatbot API Connection Test</h1>
+    
+    <div class="test-section">
+        <h3>1. Backend Health Check</h3>
+        <button onclick="testHealth()">Test Backend Health</button>
+        <div id="healthResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>2. Chatbot API Test</h3>
+        <input type="text" id="testMessage" placeholder="Enter test message" value="Help with earthquake safety" style="width: 300px;">
+        <button onclick="testChatbot()">Test Chatbot API</button>
+        <div id="chatResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>3. Mock API Status</h3>
+        <div id="mockStatus">Checking mock API loading...</div>
+    </div>
+
+    <script>
+        // Check if mock API was loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const mockStatus = document.getElementById('mockStatus');
+            if (window.MockChatbotAPI) {
+                mockStatus.innerHTML = '<span class="error">❌ Mock API is loaded (this means backend detection failed)</span>';
+            } else {
+                mockStatus.innerHTML = '<span class="success">✅ Mock API not loaded (backend should be available)</span>';
+            }
+        });
+
+        async function testHealth() {
+            const result = document.getElementById('healthResult');
+            result.innerHTML = '<span class="info">Testing...</span>';
+            
+            try {
+                const response = await fetch('http://localhost:4002/health');
+                if (response.ok) {
+                    const data = await response.json();
+                    result.innerHTML = `<span class="success">✅ Backend healthy: ${JSON.stringify(data)}</span>`;
+                } else {
+                    result.innerHTML = `<span class="error">❌ Backend error: ${response.status}</span>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<span class="error">❌ Backend unreachable: ${error.message}</span>`;
+            }
+        }
+
+        async function testChatbot() {
+            const result = document.getElementById('chatResult');
+            const message = document.getElementById('testMessage').value;
+            result.innerHTML = '<span class="info">Testing chatbot API...</span>';
+            
+            try {
+                const payload = {
+                    text: message,
+                    location: { latitude: 0, longitude: 0 },
+                    history: []
+                };
+                
+                console.log('Sending payload:', payload);
+                
+                const response = await fetch('http://localhost:4002/bot/v1/message', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                console.log('Response status:', response.status);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Response data:', data);
+                    result.innerHTML = `<span class="success">✅ Chatbot working!</span><div id="response"><strong>Response:</strong> ${data.botMessage}</div>`;
+                } else {
+                    const errorText = await response.text();
+                    result.innerHTML = `<span class="error">❌ Chatbot API error: ${response.status} - ${errorText}</span>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<span class="error">❌ Chatbot API failed: ${error.message}</span>`;
+            }
+        }
+
+        // Auto-run tests on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                testHealth();
+                setTimeout(() => {
+                    testChatbot();
+                }, 1000);
+            }, 500);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+[
+  {
+    "id": "TC001",
+    "title": "send_message_to_ai_chatbot",
+    "description": "Test the /bot/v1/message POST endpoint to ensure it accepts valid text input with optional conversation history and location data, and returns a contextually accurate AI chatbot response with a timestamp."
+  }
+]

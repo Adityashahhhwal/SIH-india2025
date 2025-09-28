@@ -35,6 +35,19 @@ let liveUpdateData = {};
 let crowdsourcedReports = [];
 let notificationPermission = false;
 
+// Initialize AppConfig if not available
+if (!window.AppConfig) {
+    console.log('AppConfig not found, initializing fallback config');
+    window.AppConfig = {
+        API_BASE_URL: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+            ? 'http://localhost:4002' 
+            : 'https://sih-india2025.onrender.com'
+    };
+    console.log('AppConfig initialized:', window.AppConfig);
+} else {
+    console.log('AppConfig found:', window.AppConfig);
+}
+
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
@@ -5604,11 +5617,354 @@ class EmergencyContactsSystem {
 // CHATBOT FUNCTIONALITY
 // ===============================
 
-// Function to open the chatbot in a new tab/window
+// Chatbot Modal Functions
+let currentLocation = { latitude: 0, longitude: 0 };
+let chatHistory = [];
+
 function openChatbot() {
-    console.log('Opening chatbot in new tab...');
-    window.open('chatbot-popup.html', '_blank');
+    console.log('Opening chatbot modal...');
+    const modal = document.getElementById('chatbot-modal');
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    
+    // Hide notification badge when opening chatbot
+    hideChatbotBadge();
+    
+    // Focus on input field
+    setTimeout(() => {
+        document.getElementById('chatbot-input').focus();
+    }, 300);
+}
+
+function closeChatbot() {
+    const modal = document.getElementById('chatbot-modal');
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto'; // Restore scrolling
+}
+
+function handleChatKeyPress(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
+}
+
+async function sendMessage() {
+    const input = document.getElementById('chatbot-input');
+    const message = input.value.trim();
+    
+    if (!message) return;
+    
+    // Clear input and disable send button
+    input.value = '';
+    const sendButton = document.getElementById('send-button');
+    sendButton.disabled = true;
+    
+    // Add user message to chat
+    addMessageToChat(message, 'user');
+    
+    // Show typing indicator
+    showTypingIndicator();
+    
+    try {
+        // Prepare the request payload
+        const payload = {
+            text: message,
+            history: chatHistory.slice(-10), // Keep last 10 messages for context
+            location: currentLocation || { latitude: 0, longitude: 0 }
+        };
+        
+        // Get proper API configuration with multiple fallbacks
+        let apiUrl;
+        console.log('Checking API configuration...');
+        
+        if (window.AppConfig && window.AppConfig.API_BASE_URL) {
+            apiUrl = `${window.AppConfig.API_BASE_URL}/bot/v1/message`;
+            console.log('Using window.AppConfig:', window.AppConfig);
+        } else if (typeof getConfig === 'function') {
+            const config = getConfig();
+            apiUrl = `${config.API_BASE_URL}${config.API_ENDPOINTS.chat}`;
+            console.log('Using getConfig():', config);
+        } else {
+            // Fallback to localhost for development
+            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            apiUrl = isLocal ? 'http://localhost:4002/bot/v1/message' : 'https://sih-india2025.onrender.com/bot/v1/message';
+            console.log('Using fallback config, isLocal:', isLocal);
+        }
+        
+        console.log('=== CHATBOT DEBUG ===');
+        console.log('API URL:', apiUrl);
+        console.log('Payload:', JSON.stringify(payload, null, 2));
+        
+        // Call the backend API
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+        
+        console.log('Response status:', response.status);
+        console.log('Response ok:', response.ok);
+        
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Error response:', errorText);
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        
+        // Remove typing indicator
+        removeTypingIndicator();
+        
+        // Debug log the response
+        console.log('=== API RESPONSE DEBUG ===');
+        console.log('Full response:', JSON.stringify(data, null, 2));
+        console.log('data.botMessage:', data.botMessage);
+        console.log('data.message:', data.message);
+        console.log('botMessage type:', typeof data.botMessage);
+        console.log('botMessage length:', data.botMessage ? data.botMessage.length : 'N/A');
+        
+        // Get bot message with better fallback handling
+        let botMessage = data.botMessage || data.message || 'I apologize, but I encountered an issue. Please try again.';
+        
+        // Ensure the message is not undefined or empty
+        if (!botMessage || botMessage.trim() === '' || botMessage === 'undefined') {
+            botMessage = 'I\'m here to help with emergency guidance. Please describe your situation and I\'ll provide assistance.';
+        }
+        
+        // Add bot response to chat
+        addMessageToChat(botMessage, 'bot');
+        
+        // Update chat history
+        chatHistory.push(
+            { role: 'user', content: message },
+            { role: 'assistant', content: data.botMessage }
+        );
+        
+    } catch (error) {
+        console.error('Chat API Error:', error);
+        
+        // Remove typing indicator
+        removeTypingIndicator();
+        
+        // FORCE LIVE API - Don't use mock responses
+        if (window.FORCE_LIVE_API) {
+            addMessageToChat(`⚠️ Backend API error: ${error.message}. The backend is running but returned an error. Please check the console for details and try again.`, 'bot');
+        } else {
+            // Fallback to mock API if available and not forced to use live
+            if (window.MockChatbotAPI && !window.BACKEND_AVAILABLE) {
+                try {
+                    const mockResponse = await window.MockChatbotAPI.sendMessage(message, currentLocation);
+                    addMessageToChat(mockResponse.botMessage, 'bot');
+                } catch (mockError) {
+                    addMessageToChat('I apologize, but I\'m currently unable to process your request. Please try again later or contact emergency services directly if this is urgent.', 'bot');
+                }
+            } else {
+                addMessageToChat('Connection error. Please check your internet connection and try again.', 'bot');
+            }
+        }
+    } finally {
+        // Re-enable send button
+        sendButton.disabled = false;
+        input.focus();
+    }
+}
+
+function addMessageToChat(message, sender) {
+    const messagesContainer = document.getElementById('chatbot-messages');
+    
+    // Ensure message is not undefined or empty
+    if (!message || message.toString().trim() === '' || message === 'undefined') {
+        message = sender === 'user' ? 'Message sent' : 'I\'m here to help with emergency guidance. Please describe your situation.';
+    }
+    
+    const messageDiv = document.createElement('div');
+    messageDiv.className = sender === 'user' ? 'user-message' : 'bot-message';
+    
+    const icon = sender === 'user' ? 'fas fa-user' : 'fas fa-robot';
+    
+    messageDiv.innerHTML = `
+        <div class="message-content">
+            <i class="${icon}"></i>
+            <span>${message.toString()}</span>
+        </div>
+    `;
+    
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function showTypingIndicator() {
+    const messagesContainer = document.getElementById('chatbot-messages');
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'bot-message typing-indicator';
+    typingDiv.id = 'typing-indicator';
+    
+    typingDiv.innerHTML = `
+        <div class="message-content">
+            <i class="fas fa-robot"></i>
+            <span>AI is typing</span>
+            <div class="typing-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    `;
+    
+    messagesContainer.appendChild(typingDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function removeTypingIndicator() {
+    const typingIndicator = document.getElementById('typing-indicator');
+    if (typingIndicator) {
+        typingIndicator.remove();
+    }
+}
+
+function toggleLocationSharing() {
+    const checkbox = document.getElementById('location-sharing');
+    
+    if (checkbox.checked) {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    currentLocation = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        accuracy: position.coords.accuracy,
+                        timestamp: new Date().toISOString()
+                    };
+                    console.log('Location sharing enabled:', currentLocation);
+                },
+                (error) => {
+                    console.error('Location error:', error);
+                    checkbox.checked = false;
+                    alert('Unable to access location. Please check your browser settings.');
+                },
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 300000 }
+            );
+        } else {
+            checkbox.checked = false;
+            alert('Geolocation is not supported by your browser.');
+        }
+    } else {
+        currentLocation = null;
+        console.log('Location sharing disabled');
+    }
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('chatbot-modal');
+    if (event.target === modal) {
+        closeChatbot();
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        const modal = document.getElementById('chatbot-modal');
+        if (modal.classList.contains('show')) {
+            closeChatbot();
+        }
+    }
+});
+
+// Notification Badge Management
+function showChatbotBadge(count = 1) {
+    const badge = document.getElementById('chatbot-badge');
+    const countElement = document.getElementById('badge-count');
+    
+    if (badge && countElement) {
+        countElement.textContent = count > 99 ? '99+' : count.toString();
+        badge.classList.remove('hide');
+        badge.classList.add('show');
+        
+        // Add subtle animation to button
+        const button = document.getElementById('chatbot-toggle');
+        if (button) {
+            button.style.animation = 'none';
+            button.offsetHeight; // Trigger reflow
+            button.style.animation = 'pulseGlow 2s ease-in-out infinite';
+        }
+    }
+}
+
+function hideChatbotBadge() {
+    const badge = document.getElementById('chatbot-badge');
+    
+    if (badge) {
+        badge.classList.remove('show');
+        badge.classList.add('hide');
+        
+        // Reset button animation
+        const button = document.getElementById('chatbot-toggle');
+        if (button) {
+            button.style.animation = 'pulseGlow 3s ease-in-out infinite';
+        }
+    }
+}
+
+function updateChatbotBadge(count) {
+    if (count > 0) {
+        showChatbotBadge(count);
+    } else {
+        hideChatbotBadge();
+    }
+}
+
+// Auto-show badge for demonstration after page load
+setTimeout(() => {
+    // Show badge with count 1 to indicate AI assistant is ready
+    showChatbotBadge(1);
+}, 2000);
+
+// Check FontAwesome loading and ensure icons are visible
+function ensureIconsVisible() {
+    const icons = document.querySelectorAll('.simple-chatbot-button i, .chatbot-header h3 i');
+    
+    icons.forEach(icon => {
+        // Clear any text content to avoid double icons
+        icon.textContent = '';
+        
+        // Check if FontAwesome is loaded by checking computed styles
+        const computed = window.getComputedStyle(icon, '::before');
+        const content = computed.getPropertyValue('content');
+        
+        // If FontAwesome is loaded properly, mark it
+        if (content && content !== 'none' && content !== '""') {
+            icon.classList.add('fa-loaded');
+            console.log('✅ FontAwesome icon loaded successfully');
+        } else {
+            // FontAwesome failed, use emoji fallback
+            console.log('⚠️ FontAwesome icon not loaded, using emoji fallback');
+            icon.classList.remove('fa-loaded');
+            icon.style.position = 'relative';
+        }
+    });
+}
+
+// Run icon check after DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(ensureIconsVisible, 500);
+});
+
+// Also run check when fonts are loaded
+if (document.fonts) {
+    document.fonts.ready.then(ensureIconsVisible);
 }
 
 // Make functions globally available
 window.openChatbot = openChatbot;
+window.closeChatbot = closeChatbot;
+window.sendMessage = sendMessage;
+window.showChatbotBadge = showChatbotBadge;
+window.hideChatbotBadge = hideChatbotBadge;
+window.updateChatbotBadge = updateChatbotBadge;
+window.handleChatKeyPress = handleChatKeyPress;
+window.toggleLocationSharing = toggleLocationSharing;

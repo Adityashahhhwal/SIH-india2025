@@ -91,6 +91,27 @@ app.get("/health", (req, res) => {
   });
 });
 
+  // Debug endpoint (non-production): check OpenRouter connectivity
+  if (process.env.NODE_ENV !== 'production') {
+    app.get('/debug/openrouter', async (req, res) => {
+      try {
+        const base = process.env.OPENAI_BASE_URL || 'https://openrouter.ai/api/v1';
+        const resp = await fetch(`${base}/models`, {
+          headers: {
+            Authorization: `Bearer ${process.env.OPENAI_API_KEY || ''}`,
+            'HTTP-Referer': process.env.OPENAI_HTTP_REFERER || 'https://disaster-managementweb.netlify.app',
+            'X-Title': process.env.OPENAI_X_TITLE || 'Disaster Management Bot',
+          }
+        });
+        const text = await resp.text();
+        const bodyPreview = text.length > 1500 ? text.slice(0, 1500) + '…' : text;
+        res.status(resp.status).json({ ok: resp.ok, status: resp.status, bodyPreview });
+      } catch (e) {
+        res.status(500).json({ ok: false, error: String(e?.message || e) });
+      }
+    });
+  }
+
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server is Running on Port ${port}`)
   console.log(`Health check available at: http://localhost:${port}/health`)

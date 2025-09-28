@@ -48,7 +48,7 @@ export const Message = async (req, res) => {
 
 RESPONSE GUIDELINES:
 - Be conversational but direct
-- Default to 2-3 key safety tips unless asked for detailed steps
+- Default to 3-6 key safety tips unless asked for detailed steps
 - Use simple, everyday language
 - Format responses naturally - avoid excessive numbering
 - Keep each point concise (under 100 characters)
