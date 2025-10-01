@@ -617,7 +617,6 @@ function updateFloodDisplay() {
         }
     }
 }
-
 function setupReportFilters() {
     const filterButtons = document.querySelectorAll('.filter-btn');
     filterButtons.forEach(button => {
