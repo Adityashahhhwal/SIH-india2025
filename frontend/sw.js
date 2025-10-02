@@ -1,4 +1,4 @@
-// No-op service worker stub to avoid 404s during local dev.
+// Minimal service worker - only handles install and activate
+// No fetch handler to avoid overhead during navigation
 self.addEventListener('install', (e) => self.skipWaiting());
 self.addEventListener('activate', (e) => self.clients.claim());
-self.addEventListener('fetch', () => {});

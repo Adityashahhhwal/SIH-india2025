@@ -7314,77 +7314,102 @@ section:nth-child(even) {
     }
 }
 
-/* Enhanced Chatbot Button - Round Icon Only */
+/* ===============================
+   CHATBOT FLOATING BUTTON
+   =============================== */
+/* Fixed position button in bottom-right corner with gradient background */
 .simple-chatbot-button {
+    /* Position and Layout */
     position: fixed !important;
     bottom: 24px !important;
     right: 24px !important;
+    z-index: 10001 !important;
+    width: 68px !important;
+    height: 68px !important;
+    
+    /* Visual Design - Purple gradient with subtle border */
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-    color: white !important;
-    border: none;
+    border: 3px solid rgba(255, 255, 255, 0.15);
     border-radius: 50% !important;
-    padding: 0 !important;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
+    
+    /* Multi-layer shadow for depth effect */
     box-shadow: 
         0 8px 32px rgba(102, 126, 234, 0.35),
         0 4px 16px rgba(102, 126, 234, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    /* Flexbox centering for icon */
     display: flex !important;
     align-items: center;
     justify-content: center;
-    gap: 0;
-    z-index: 10001 !important;
-    width: 68px !important;
-    height: 68px !important;
+    
+    /* Interaction States */
+    color: white !important;
+    cursor: pointer;
     backdrop-filter: blur(10px);
-    border: 3px solid rgba(255, 255, 255, 0.15);
-    transform: scale(1) rotate(0deg);
+    
+    /* Smooth animations with spring-like easing */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     animation: pulseGlow 3s ease-in-out infinite;
-    position: relative;
+    
+    /* Reset unwanted properties */
+    padding: 0 !important;
+    border-style: solid;
     visibility: visible !important;
     opacity: 1 !important;
 }
 
-/* Notification Badge */
+/* Notification Badge - Red circle showing unread message count */
 .chatbot-notification-badge {
+    /* Position at top-right of button */
     position: absolute;
     top: -10px;
     right: -10px;
-    background: linear-gradient(135deg, #ff4757 0%, #ff3838 100%);
-    color: white;
-    border-radius: 50%;
+    z-index: 2;
+    
+    /* Circular badge with gradient background */
     min-width: 26px;
     min-height: 26px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff4757 0%, #ff3838 100%);
+    border: 3px solid #ffffff;
+    
+    /* Center the count number */
     display: flex;
     align-items: center;
     justify-content: center;
+    
+    /* Typography - Bold white text */
+    color: white;
     font-size: 13px;
     font-weight: 800;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    border: 3px solid #ffffff;
+    
+    /* Shadow for depth */
     box-shadow: 
         0 6px 16px rgba(255, 71, 87, 0.45),
         0 3px 8px rgba(255, 71, 87, 0.25);
-    animation: badgePulse 2s ease-in-out infinite;
-    z-index: 2;
+    
+    /* Start hidden, scale animation on show */
     transform: scale(0);
     opacity: 0;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: badgePulse 2s ease-in-out infinite;
 }
 
+/* Show state - Badge pops into view */
 .chatbot-notification-badge.show {
     transform: scale(1);
     opacity: 1;
 }
 
+/* Hide state - Badge scales down and fades */
 .chatbot-notification-badge.hide {
     transform: scale(0);
     opacity: 0;
 }
 
+/* Badge pulse animation - subtle breathing effect */
 @keyframes badgePulse {
     0%, 100% {
         transform: scale(1);
@@ -7400,20 +7425,23 @@ section:nth-child(even) {
     }
 }
 
+/* Button hover - Lifts up and grows slightly */
 .simple-chatbot-button:hover {
     transform: translateY(-6px) scale(1.1);
     box-shadow: 
         0 20px 48px rgba(102, 126, 234, 0.5),
         0 10px 28px rgba(102, 126, 234, 0.35),
         inset 0 2px 0 rgba(255, 255, 255, 0.4);
-    animation: none;
+    animation: none; /* Stop pulsing on hover */
 }
 
+/* Button active/click - Slight press down effect */
 .simple-chatbot-button:active {
     transform: translateY(-3px) scale(1.05);
     transition: all 0.15s ease;
 }
 
+/* Icon inside button - Centered with shadow */
 .simple-chatbot-button i {
     font-size: 1.8rem;
     filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
@@ -7426,14 +7454,14 @@ section:nth-child(even) {
     line-height: 1;
 }
 
-/* Clean FontAwesome icon display */
+/* FontAwesome robot icon - Ensures correct icon rendering */
 .simple-chatbot-button i.fas.fa-robot::before {
-    content: "\f544";
+    content: "\f544"; /* Unicode for robot icon */
     font-family: "Font Awesome 6 Free";
     font-weight: 900;
 }
 
-/* Emoji fallback when FontAwesome fails */
+/* Emoji fallback - Shows robot emoji if FontAwesome doesn't load */
 .simple-chatbot-button i.fas.fa-robot:not(.fa-loaded):after {
     content: "🤖";
     font-family: "Segoe UI Emoji", "Noto Color Emoji", "Apple Color Emoji", sans-serif;
@@ -7444,12 +7472,7 @@ section:nth-child(even) {
     transform: translate(-50%, -50%);
 }
 
-.simple-chatbot-button .button-text {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    letter-spacing: 0.5px;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
+/* Button pulse glow animation - Breathes in/out every 3 seconds */
 @keyframes pulseGlow {
     0%, 100% {
         box-shadow: 
@@ -7465,6 +7488,10 @@ section:nth-child(even) {
     }
 }
 
+/* ===============================
+   RESPONSIVE: TABLET & MOBILE
+   =============================== */
+/* Tablet - Slightly smaller button */
 @media (max-width: 768px) {
     .simple-chatbot-button {
         bottom: 20px;
@@ -7479,6 +7506,7 @@ section:nth-child(even) {
     }
 }
 
+/* Mobile - Compact button for small screens */
 @media (max-width: 480px) {
     .simple-chatbot-button {
         bottom: 16px;
@@ -7492,6 +7520,7 @@ section:nth-child(even) {
         font-size: 1.4rem;
     }
     
+    /* Smaller notification badge on mobile */
     .chatbot-notification-badge {
         top: -6px;
         right: -6px;
@@ -7502,502 +7531,492 @@ section:nth-child(even) {
     }
 }
 
-/* Enhanced Chatbot Modal Styles */
+/* ===============================
+   CHATBOT MODAL (iMessage Style)
+   =============================== */
+/* Full-screen overlay with blur background */
 .chatbot-modal {
+    /* Positioning - Covers entire viewport */
     position: fixed;
     z-index: 10000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0);
-    backdrop-filter: blur(0px);
+    
+    /* Center the modal content */
     display: flex;
     align-items: center;
     justify-content: center;
+    
+    /* Start hidden - No background or blur */
     opacity: 0;
     visibility: hidden;
+    background-color: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+    
+    /* Smooth entrance/exit animation */
     transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    transform: scale(1.1);
 }
 
+/* Show state - Dark overlay with blur effect */
 .chatbot-modal.show {
     opacity: 1;
     visibility: visible;
     background-color: rgba(0, 0, 0, 0.65);
     backdrop-filter: blur(8px);
-    transform: scale(1);
 }
 
+/* Hide state - Quick fade out */
 .chatbot-modal.hide {
     opacity: 0;
     visibility: hidden;
     background-color: rgba(0, 0, 0, 0);
     backdrop-filter: blur(0px);
-    transform: scale(1.05);
     transition: all 0.3s ease-in;
 }
 
+/* Modal container - iPhone-style rounded card */
 .chatbot-modal-content {
-    background: linear-gradient(145deg, #ffffff 0%, #fafbff 100%);
-    border-radius: 28px;
-    width: 92%;
-    max-width: 540px;
-    height: 88vh;
-    max-height: 680px;
-    box-shadow: 
-        0 40px 80px rgba(102, 126, 234, 0.15),
-        0 20px 40px rgba(0, 0, 0, 0.1),
-        0 8px 24px rgba(102, 126, 234, 0.08),
-        0 0 0 1px rgba(255, 255, 255, 0.9),
-        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    /* Layout - Vertical flexbox for header/body/footer */
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    
+    /* Size - Responsive width, fixed height */
+    width: 92%;
+    max-width: 460px;
+    height: 88vh;
+    max-height: 700px;
+    
+    /* Visual - White card with rounded corners */
+    background: #ffffff;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.2),
+        0 8px 24px rgba(0, 0, 0, 0.12);
+    
+    /* Typography - Apple system fonts */
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    
+    /* Start hidden - Below viewport and scaled down */
     transform: translateY(40px) scale(0.9);
     opacity: 0;
+    
+    /* Spring-like entrance animation */
     transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 2px solid rgba(102, 126, 234, 0.1);
 }
 
+/* Show state - Modal slides up and scales to normal size */
 .chatbot-modal.show .chatbot-modal-content {
     transform: translateY(0) scale(1);
     opacity: 1;
-    transition-delay: 0.1s;
+    transition-delay: 0.1s; /* Slight delay after overlay appears */
 }
 
+/* Hide state - Modal slides up slightly and fades */
 .chatbot-modal.hide .chatbot-modal-content {
     transform: translateY(-20px) scale(0.95);
     opacity: 0;
     transition: all 0.25s ease-in;
 }
 
+/* Header - iMessage style light gray top bar */
 .chatbot-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5a67d8 100%);
-    color: white;
-    padding: 28px 32px;
+    /* Layout */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 28px 28px 0 0;
-    position: relative;
-    overflow: hidden;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 12px 16px;
+    
+    /* Visual - Light gray background with subtle border */
+    background: #f6f6f6;
+    color: #000000;
+    border-radius: 20px 20px 0 0;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
 }
 
-.chatbot-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, 
-        rgba(255,255,255,0.15) 0%, 
-        rgba(255,255,255,0.05) 50%,
-        rgba(255,255,255,0.1) 100%);
-    pointer-events: none;
-}
-
-.chatbot-header::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-    pointer-events: none;
-    animation: headerShimmer 4s ease-in-out infinite;
-}
-
-@keyframes headerShimmer {
-    0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-    50% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-}
-
+/* Header title - Compact text with icon */
 .chatbot-header h3 {
     margin: 0;
-    font-size: 1.5rem;
-    font-weight: 800;
+    padding: 0;
+    
+    /* Typography - Apple San Francisco font style */
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000000;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: -0.3px; /* Tighter letter spacing like iOS */
+    
+    /* Icon alignment */
     display: flex;
     align-items: center;
-    gap: 14px;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    color: #ffffff;
-    font-family: 'Inter', 'Segoe UI', 'Roboto', Arial, sans-serif;
-    letter-spacing: 0.5px;
-    position: relative;
-    z-index: 1;
+    gap: 8px;
 }
 
+/* Header icon - Blue colored, fixed size */
 .chatbot-header h3 i {
-    font-size: 1.6rem;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    font-size: 1.2rem;
+    color: #007AFF; /* Apple blue */
     display: inline-block;
-    min-width: 1.6rem;
+    min-width: 1.2rem;
     text-align: center;
     line-height: 1;
 }
 
-/* Clean FontAwesome icon for header */
+/* FontAwesome icon for header */
 .chatbot-header h3 i.fas.fa-robot::before {
     content: "\f544";
     font-family: "Font Awesome 6 Free";
     font-weight: 900;
 }
 
-/* Emoji fallback for header when FontAwesome fails */
+/* Emoji fallback for header if FontAwesome fails */
 .chatbot-header h3 i.fas.fa-robot:not(.fa-loaded):after {
-    content: "🤖";
+    content: "💬";
     font-family: "Segoe UI Emoji", "Noto Color Emoji", "Apple Color Emoji", sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
 }
 
+/* Close button - iOS style text button */
 .chatbot-close {
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    font-size: 1.8rem;
+    /* Reset button styles */
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 4px 8px;
+    
+    /* Blue text like iOS */
+    color: #007AFF;
+    font-size: 1rem;
+    font-weight: 400;
     cursor: pointer;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
+    
+    /* Centering */
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    position: relative;
-    z-index: 1;
-    backdrop-filter: blur(10px);
+    
+    /* Fade opacity on interaction */
+    transition: opacity 0.2s ease;
 }
 
+/* Close button hover - Slight fade */
 .chatbot-close:hover {
-    background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: scale(1.1) rotate(90deg);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    opacity: 0.6;
+    background: transparent;
+    color: #007AFF;
 }
 
+/* Close button active - More fade */
 .chatbot-close:active {
-    transform: scale(0.95) rotate(90deg);
-    transition: all 0.1s ease;
+    opacity: 0.4;
+    background: transparent;
 }
 
+/* Modal body - Contains messages and input */
 .chatbot-body {
-    flex: 1;
+    flex: 1; /* Takes remaining space between header and footer */
     display: flex;
     flex-direction: column;
     height: 100%;
 }
 
+/* Messages container - Scrollable chat history */
 .chatbot-messages {
-    flex: 1;
-    padding: 24px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    background: linear-gradient(180deg, #f8faff 0%, #f0f4ff 100%);
+    /* Layout */
+    flex: 1; /* Grows to fill available space */
+    display: block;
+    padding: 12px 16px;
+    overflow-y: auto; /* Scroll when messages overflow */
+    
+    /* Visual */
+    background: #ffffff;
+    
+    /* Scrollbar styling - Thin and subtle */
     scrollbar-width: thin;
-    scrollbar-color: rgba(102, 126, 234, 0.3) transparent;
+    scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
 }
 
+/* Clearfix - Ensures float-based messages don't collapse container */
+.chatbot-messages::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Webkit scrollbar styles (Chrome, Safari, Edge) */
 .chatbot-messages::-webkit-scrollbar {
-    width: 6px;
+    width: 8px; /* Narrow scrollbar */
 }
 
 .chatbot-messages::-webkit-scrollbar-track {
     background: transparent;
-    border-radius: 3px;
 }
 
 .chatbot-messages::-webkit-scrollbar-thumb {
-    background: rgba(102, 126, 234, 0.3);
-    border-radius: 3px;
-    transition: background 0.2s ease;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    transition: background 0.2s ease; 
 }
 
 .chatbot-messages::-webkit-scrollbar-thumb:hover {
-    background: rgba(102, 126, 234, 0.5);
+    background: rgba(0, 0, 0, 0.3); /* Darker on hover */
 }
 
+/* Message bubbles - Float-based layout for proper alignment */
 .bot-message, .user-message {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    max-width: 88%;
-    animation: messageSlideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* Layout - Block display with float positioning */
+    display: block;
+    width: fit-content; /* Only as wide as content */
+    max-width: 70%; /* Don't exceed 70% of container width */
+    margin-bottom: 2px; /* Tiny gap between messages */
+    clear: both; /* Each message on its own line */
+    
+    /* Entrance animation */
+    animation: messageSlideIn 0.3s ease-out;
 }
 
+/* Bot messages - Align left with gray bubble */
+.bot-message {
+    float: left;
+    clear: both;
+}
+
+/* User messages - Align right with blue bubble */
 .user-message {
-    align-self: flex-end;
-    flex-direction: row-reverse;
+    float: right;
+    clear: both;
 }
 
+/* Message bubble - Common styles for both bot and user */
 .message-content {
-    background: linear-gradient(145deg, #ffffff 0%, #f8faff 100%);
-    padding: 20px 26px;
-    border-radius: 26px 26px 26px 8px;
-    box-shadow: 
-        0 8px 24px rgba(102, 126, 234, 0.08),
-        0 4px 12px rgba(0, 0, 0, 0.04),
-        0 1px 3px rgba(102, 126, 234, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
+    /* Layout */
+    display: inline-block;
+    max-width: 100%;
+    padding: 10px 14px;
+    vertical-align: top; /* Prevents baseline alignment issues */
+    
+    /* Visual - Default bot style (light gray) */
+    background: #E9E9EB;
+    border: none;
+    box-shadow: none;
+    
+    /* Typography - Apple system font */
+    font-size: 16px;
+    font-weight: 400;
+    color: #000000;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: -0.2px; /* iOS-style tight spacing */
+    text-align: left;
+    line-height: 1.4;
+    
+    /* Text handling */
     word-wrap: break-word;
-    font-size: 15px;
-    line-height: 1.6;
-    font-weight: 500;
-    color: #1a202c;
-    font-family: 'Inter', 'Segoe UI', 'Roboto', Arial, sans-serif;
+    word-break: break-word;
+    
+    /* Font rendering optimization */
     text-rendering: optimizeLegibility;
-    border: 2px solid rgba(102, 126, 234, 0.08);
-    position: relative;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
+    -webkit-font-smoothing: antialiased;
 }
 
+/* Hover state - Subtle outline */
 .message-content:hover {
-    transform: translateY(-1px);
-    box-shadow: 
-        0 12px 32px rgba(102, 126, 234, 0.12),
-        0 6px 16px rgba(0, 0, 0, 0.06),
-        0 2px 4px rgba(102, 126, 234, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease;
 }
 
+/* User message bubble - Blue background like iMessage */
 .user-message .message-content {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5a67d8 100%);
+    background: #007AFF; /* Apple blue */
     color: #ffffff;
-    font-weight: 600;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    border-radius: 26px 26px 8px 26px;
-    border: 2px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 
-        0 10px 28px rgba(102, 126, 234, 0.3),
-        0 4px 12px rgba(102, 126, 234, 0.2),
-        0 2px 6px rgba(102, 126, 234, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
-.user-message .message-content:hover {
-    transform: translateY(-2px);
-    box-shadow: 
-        0 14px 36px rgba(102, 126, 234, 0.35),
-        0 6px 16px rgba(102, 126, 234, 0.25),
-        0 3px 8px rgba(102, 126, 234, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+/* Links in user messages - Lighter blue */
+.user-message .message-content a {
+    color: #D1E9FF;
+    text-decoration: underline;
 }
 
-.bot-message .message-content i {
-    color: #667eea;
-    flex-shrink: 0;
-}
-
-.user-message .message-content i {
-    color: white;
-    flex-shrink: 0;
-}
-
+/* Input area - Bottom section with text field and send button */
 .chatbot-input-area {
-    padding: 28px 32px;
-    background: linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
-    border-top: 2px solid rgba(102, 126, 234, 0.08);
-    backdrop-filter: blur(15px);
+    /* Layout */
+    padding: 12px 16px;
     position: relative;
+    
+    /* Visual - Light gray background matching header */
+    background: #f6f6f6;
+    border-top: 0.5px solid rgba(0, 0, 0, 0.1);
 }
 
-.chatbot-input-area::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(102, 126, 234, 0.2) 50%, 
-        transparent 100%);
-}
-
+/* Input group - Flexbox container for input and button */
 .input-group {
     display: flex;
-    gap: 12px;
-    margin-bottom: 12px;
-    align-items: flex-end;
+    align-items: center; /* Vertically center items */
+    gap: 8px; /* Space between input and button */
+    margin-bottom: 0;
 }
 
+/* Text input field - Rounded like iOS Messages */
 #chatbot-input {
-    flex: 1;
-    padding: 20px 26px;
-    border: 2px solid rgba(102, 126, 234, 0.12);
-    border-radius: 32px;
+    /* Layout */
+    flex: 1; /* Grows to fill available space */
+    padding: 8px 14px;
+    min-height: 20px;
+    max-height: 100px; /* Limit height for long messages */
+    
+    /* Visual - Rounded corners with subtle border */
+    border: 1px solid #E4E4E6;
+    border-radius: 20px;
+    background: #F6F6F6;
+    box-shadow: none;
     outline: none;
-    font-size: 15px;
-    font-weight: 500;
-    font-family: 'Inter', 'Segoe UI', 'Roboto', Arial, sans-serif;
-    color: #1a202c;
-    line-height: 1.5;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    text-rendering: optimizeLegibility;
-    background: linear-gradient(145deg, #ffffff 0%, #fafbff 100%);
-    box-shadow: 
-        0 4px 12px rgba(102, 126, 234, 0.06),
-        0 2px 6px rgba(0, 0, 0, 0.04),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    resize: none;
-    min-height: 24px;
-    max-height: 120px;
-    backdrop-filter: blur(10px);
-}
-
-#chatbot-input:focus {
-    border-color: #667eea;
-    box-shadow: 
-        0 8px 24px rgba(102, 126, 234, 0.2),
-        0 4px 12px rgba(102, 126, 234, 0.15),
-        0 0 0 4px rgba(102, 126, 234, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    transform: translateY(-2px);
-    background: linear-gradient(145deg, #ffffff 0%, #f8faff 100%);
-}
-
-#chatbot-input::placeholder {
-    color: rgba(45, 55, 72, 0.6);
+    
+    /* Typography - Apple system font */
+    font-size: 16px; /* 16px prevents zoom on iOS */
     font-weight: 400;
-    transition: all 0.3s ease;
+    color: #000000;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: -0.2px;
+    line-height: 1.4;
+    
+    /* Interaction */
+    resize: none;
+    transition: border-color 0.2s ease;
 }
 
+/* Input focus state - White background with blue border */
+#chatbot-input:focus {
+    background: #ffffff;
+    border-color: #007AFF; /* Apple blue */
+    box-shadow: none;
+}
+
+/* Placeholder text - Gray color */
+#chatbot-input::placeholder {
+    color: #8E8E93; /* iOS gray */
+    font-weight: 400;
+}
+
+/* Placeholder on focus - Same color */
 #chatbot-input:focus::placeholder {
-    color: rgba(102, 126, 234, 0.7);
-    transform: translateX(2px);
+    color: #8E8E93;
 }
 
+/* Send button - Blue circle with paper plane icon */
 #send-button {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5a67d8 100%);
+    /* Layout - Fixed size circle */
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0; /* Don't shrink when input grows */
+    border-radius: 50%;
+    
+    /* Visual - Apple blue background */
+    background: #007AFF;
     color: white;
     border: none;
-    border-radius: 50%;
-    width: 56px;
-    height: 56px;
-    cursor: pointer;
+    box-shadow: none;
+    overflow: hidden;
+    
+    /* Centering */
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow: 
-        0 6px 20px rgba(102, 126, 234, 0.3),
-        0 3px 10px rgba(102, 126, 234, 0.2),
-        0 1px 4px rgba(102, 126, 234, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    flex-shrink: 0;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    position: relative;
-    overflow: hidden;
+    
+    /* Interaction */
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.1s ease;
 }
 
-#send-button::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
-    transition: all 0.3s ease;
-    opacity: 0;
-}
-
-#send-button:hover::before {
-    opacity: 1;
-    animation: buttonShine 0.6s ease-out;
-}
-
+/* Send button hover - Slight fade */
 #send-button:hover {
-    transform: translateY(-4px) scale(1.08);
-    box-shadow: 
-        0 12px 32px rgba(102, 126, 234, 0.4),
-        0 6px 16px rgba(102, 126, 234, 0.3),
-        0 2px 8px rgba(102, 126, 234, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    opacity: 0.8;
 }
 
+/* Send button active - More fade and scale down */
 #send-button:active {
-    transform: translateY(-2px) scale(1.02);
-    transition: all 0.15s ease;
-}
-
-@keyframes buttonShine {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-#send-button:disabled {
     opacity: 0.6;
+    transform: scale(0.95);
+}
+
+/* Send button disabled - Faded and no pointer */
+#send-button:disabled {
+    opacity: 0.5;
     cursor: not-allowed;
-    transform: none;
-    box-shadow: 
-        0 2px 8px rgba(102, 126, 234, 0.15),
-        0 1px 4px rgba(102, 126, 234, 0.1);
 }
 
+/* Send button icon - Paper plane */
 #send-button i {
-    font-size: 1.1rem;
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+    font-size: 1rem;
 }
 
+/* Location sharing toggle - Below input field */
 .location-toggle {
-    font-size: 15px;
-    color: #374151;
-    font-weight: 600;
-    font-family: 'Inter', 'Segoe UI', 'Roboto', Arial, sans-serif;
+    /* Typography - Small gray text */
+    font-size: 12px;
+    color: #8E8E93; /* iOS gray */
+    font-weight: 400;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
 }
 
+/* Location toggle label - Flexbox with icon */
 .location-toggle label {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     cursor: pointer;
 }
 
+/* Location checkbox - Styled with Apple blue */
 .location-toggle input[type="checkbox"] {
-    transform: scale(1.1);
+    transform: scale(0.9); /* Slightly smaller */
+    accent-color: #007AFF; /* Blue when checked */
 }
 
+/* Typing indicator - Shows when bot is responding */
 .typing-indicator {
     display: flex;
     align-items: center;
-    gap: 8px;
-    color: #666;
-    font-style: italic;
-    font-size: 14px;
+    gap: 6px;
+    
+    /* Visual - Gray text */
+    color: #8E8E93;
+    font-size: 13px;
     font-weight: 400;
+    font-style: normal;
 }
 
+/* Typing dots container */
 .typing-dots {
     display: flex;
     gap: 4px;
 }
 
+/* Individual typing dots - Animated circles */
 .typing-dots span {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: #667eea;
+    background-color: #C7C7CC;
+    
+    /* Bounce animation with staggered delay */
     animation: typingBounce 1.4s infinite ease-in-out;
 }
 
+/* Stagger animation timing for wave effect */
 .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
 .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+.typing-dots span:nth-child(3) { animation-delay: 0s; }
 
+/* ===============================
+   KEYFRAME ANIMATIONS
+   =============================== */
+/* Fade in overlay with blur effect */
 @keyframes fadeIn {
     from { 
         opacity: 0; 
@@ -8009,6 +8028,7 @@ section:nth-child(even) {
     }
 }
 
+/* Slide up from bottom animation */
 @keyframes slideUp {
     from {
         opacity: 0;
@@ -8020,6 +8040,7 @@ section:nth-child(even) {
     }
 }
 
+/* Message entrance - Slides in from left */
 @keyframes messageSlideIn {
     from {
         opacity: 0;
@@ -8031,6 +8052,7 @@ section:nth-child(even) {
     }
 }
 
+/* Modal opening - Bouncy entrance */
 @keyframes modalOpen {
     0% {
         opacity: 0;
@@ -8038,7 +8060,7 @@ section:nth-child(even) {
     }
     50% {
         opacity: 0.8;
-        transform: scale(1.02) translateY(-10px);
+        transform: scale(1.02) translateY(-10px); /* Slight overshoot */
     }
     100% {
         opacity: 1;
@@ -8046,6 +8068,7 @@ section:nth-child(even) {
     }
 }
 
+/* Modal closing - Quick fade and shrink */
 @keyframes modalClose {
     0% {
         opacity: 1;
@@ -8057,43 +8080,51 @@ section:nth-child(even) {
     }
 }
 
+/* Typing dots bounce - Scale up and down */
 @keyframes typingBounce {
-    0%, 80%, 100% { transform: scale(0); }
-    40% { transform: scale(1); }
+    0%, 80%, 100% { 
+        transform: scale(0); /* Hidden */
+    }
+    40% { 
+        transform: scale(1); /* Full size */
+    }
 }
 
-/* Additional font visibility improvements */
+/* ===============================
+   UTILITY & OVERRIDE STYLES
+   =============================== */
+/* Ensure text inherits parent styles properly */
 .message-content span {
-    color: inherit !important;
-    font-weight: inherit !important;
-    font-size: inherit !important;
-    text-shadow: inherit !important;
+    color: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+    display: inline;
 }
 
+/* Bot message specific styles - Light gray bubble */
 .bot-message .message-content {
-    background: #ffffff !important;
-    border: 2px solid #e3f2fd;
-    color: #1a202c !important;
-    font-weight: 600 !important;
+    background: #E9E9EB;
+    border: none;
+    color: #000000;
+    font-weight: 400;
 }
 
+/* Ensure bot text is black */
 .bot-message .message-content span {
-    color: #1a202c !important;
+    color: #000000;
 }
 
+/* Ensure user text is white */
 .user-message .message-content span {
-    color: #ffffff !important;
+    color: #ffffff;
 }
 
-/* Placeholder styling */
-#chatbot-input::placeholder {
-    color: #6b7280;
-    font-weight: 500;
-    opacity: 0.8;
-}
-
-/* Enhanced Mobile Responsiveness */
+/* ===============================
+   RESPONSIVE: MOBILE OPTIMIZED
+   =============================== */
+/* Tablet breakpoint - Larger touch targets */
 @media (max-width: 768px) {
+    /* Modal takes more screen space */
     .chatbot-modal-content {
         width: 96%;
         height: 92vh;
@@ -8102,6 +8133,7 @@ section:nth-child(even) {
         border-radius: 20px;
     }
     
+    /* Larger header for easier tapping */
     .chatbot-header {
         padding: 20px 24px;
     }
@@ -8111,45 +8143,51 @@ section:nth-child(even) {
         gap: 10px;
     }
     
+    /* Larger close button - 44px minimum for touch */
     .chatbot-close {
         width: 40px;
         height: 40px;
         font-size: 1.6rem;
     }
     
+    /* More padding for messages */
     .chatbot-messages {
         padding: 20px;
-        gap: 16px;
     }
     
     .chatbot-input-area {
         padding: 20px 24px;
     }
     
+    /* Slightly smaller text on tablets */
     .message-content {
         font-size: 14px;
         padding: 16px 20px;
         line-height: 1.6;
     }
     
+    /* Larger input for easier typing */
     #chatbot-input {
         padding: 16px 20px;
-        font-size: 16px; /* Prevents zoom on iOS */
+        font-size: 16px; /* 16px prevents iOS zoom */
         border-radius: 24px;
     }
     
+    /* Larger send button for touch */
     #send-button {
         width: 48px;
         height: 48px;
     }
     
+    /* Messages can be wider on tablet */
     .bot-message, .user-message {
         max-width: 92%;
-        gap: 10px;
     }
 }
 
+/* Mobile breakpoint - Full screen experience */
 @media (max-width: 480px) {
+    /* Full screen modal - No margins or rounded corners */
     .chatbot-modal-content {
         width: 100%;
         height: 100vh;
@@ -8158,15 +8196,17 @@ section:nth-child(even) {
         max-width: none;
     }
     
+    /* Compact header */
     .chatbot-header {
         padding: 16px 20px;
-        border-radius: 0;
+        border-radius: 0; /* Square corners on mobile */
     }
     
     .chatbot-header h3 {
         font-size: 1.2rem;
     }
     
+    /* Tighter padding on small screens */
     .chatbot-messages {
         padding: 16px;
     }
@@ -8175,28 +8215,32 @@ section:nth-child(even) {
         padding: 16px 20px;
     }
     
+    /* Compact message bubbles */
     .message-content {
-        padding: 14px 18px;
+        padding: 10px 12px;
         font-size: 14px;
     }
     
+    /* Smaller input on mobile */
     #chatbot-input {
-        padding: 14px 18px;
+        padding: 12px 16px;
         border-radius: 20px;
     }
     
+    /* Standard mobile button size (44px for accessibility) */
     #send-button {
         width: 44px;
         height: 44px;
     }
 }
 
-/* Touch-friendly enhancements */
+/* Touch device enhancements - Larger tap targets */
+/* Applies to devices with no hover support (mobile/tablet) */
 @media (hover: none) and (pointer: coarse) {
+    /* Minimum touch target size: 44x44px (Apple guidelines) */
     .simple-chatbot-button {
         min-width: 60px;
         min-height: 60px;
-        padding: 16px 20px;
     }
     
     .chatbot-close {
@@ -8209,6 +8253,7 @@ section:nth-child(even) {
         min-height: 48px;
     }
     
+    /* More padding for easier reading on touch devices */
     .message-content {
         padding: 16px 20px;
     }

@@ -1,3 +1,6 @@
+let chatHistory = [];
+let currentLocation = null;
+
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`
@@ -854,7 +857,7 @@ function loadSavedStatus() {
     }
 }
 
-function sendMessage() {
+async function sendMessage() {
     const input = document.getElementById('chatbot-input');
     const message = input.value.trim();
     
@@ -863,10 +866,16 @@ function sendMessage() {
     // Clear input and disable send button
     input.value = '';
     const sendButton = document.getElementById('send-button');
-    sendButton.disabled = true;
+    if (sendButton) {
+        sendButton.disabled = true;
+    }
     
     // Add user message to chat
     addMessageToChat(message, 'user');
+    chatHistory.push({ role: 'user', content: message });
+    if (chatHistory.length > 20) {
+        chatHistory = chatHistory.slice(-20);
+    }
     
     // Show typing indicator
     showTypingIndicator();
@@ -902,7 +911,7 @@ function sendMessage() {
         console.log('Payload:', JSON.stringify(payload, null, 2));
         
         // Call the backend API
-        const response = fetch(apiUrl, {
+    const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -914,12 +923,12 @@ function sendMessage() {
         console.log('Response ok:', response.ok);
         
         if (!response.ok) {
-            const errorText = response.text();
+            const errorText = await response.text();
             console.error('Error response:', errorText);
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
         
-        const data = response.json();
+        const data = await response.json();
         
         // Remove typing indicator
         removeTypingIndicator();
@@ -944,10 +953,10 @@ function sendMessage() {
         addMessageToChat(botMessage, 'bot');
         
         // Update chat history
-        chatHistory.push(
-            { role: 'user', content: message },
-            { role: 'assistant', content: data.botMessage }
-        );
+        chatHistory.push({ role: 'assistant', content: botMessage });
+        if (chatHistory.length > 20) {
+            chatHistory = chatHistory.slice(-20);
+        }
         
     } catch (error) {
         console.error('Chat API Error:', error);
@@ -962,9 +971,19 @@ function sendMessage() {
             // Fallback to mock API if available and not forced to use live
             if (window.MockChatbotAPI && !window.BACKEND_AVAILABLE) {
                 try {
-                    const mockResponse = window.MockChatbotAPI.sendMessage(message, currentLocation);
-                    addMessageToChat(mockResponse.botMessage, 'bot');
+                    const mockResponse = await window.MockChatbotAPI.sendMessage(message, currentLocation);
+                    if (mockResponse?.success && mockResponse.data?.message) {
+                        const mockMessage = `🤖 ${mockResponse.data.message}`;
+                        addMessageToChat(mockMessage, 'bot');
+                        chatHistory.push({ role: 'assistant', content: mockMessage });
+                        if (chatHistory.length > 20) {
+                            chatHistory = chatHistory.slice(-20);
+                        }
+                        addMessageToChat('ℹ️ Note: Using offline mode - connect to internet for full functionality.', 'bot');
+                        return;
+                    }
                 } catch (mockError) {
+                    console.error('Mock API also failed:', mockError);
                     addMessageToChat('I apologize, but I\'m currently unable to process your request. Please try again later or contact emergency services directly if this is urgent.', 'bot');
                 }
             } else {
@@ -973,7 +992,9 @@ function sendMessage() {
         }
     } finally {
         // Re-enable send button
-        sendButton.disabled = false;
+        if (sendButton) {
+            sendButton.disabled = false;
+        }
         input.focus();
     }
 }
@@ -989,11 +1010,8 @@ function addMessageToChat(message, sender) {
     const messageDiv = document.createElement('div');
     messageDiv.className = sender === 'user' ? 'user-message' : 'bot-message';
     
-    const icon = sender === 'user' ? 'fas fa-user' : 'fas fa-robot';
-    
     messageDiv.innerHTML = `
         <div class="message-content">
-            <i class="${icon}"></i>
             <span>${message.toString()}</span>
         </div>
     `;
@@ -1010,7 +1028,6 @@ function showTypingIndicator() {
     
     typingDiv.innerHTML = `
         <div class="message-content">
-            <i class="fas fa-robot"></i>
             <span>AI is typing</span>
             <div class="typing-dots">
                 <span></span>
@@ -1060,6 +1077,44 @@ function toggleLocationSharing() {
     } else {
         currentLocation = null;
         console.log('Location sharing disabled');
+    }
+}
+
+// Function to open chatbot modal
+function openChatbot() {
+    const modal = document.getElementById('chatbot-modal');
+    if (modal) {
+        modal.classList.add('show');
+        modal.style.display = 'flex';
+        
+        // Focus on input field
+        const input = document.getElementById('chatbot-input');
+        if (input) {
+            setTimeout(() => input.focus(), 100);
+        }
+        
+        // Hide notification badge when opened
+        hideChatbotBadge();
+        
+        console.log('Chatbot opened');
+    }
+}
+
+// Function to close chatbot modal
+function closeChatbot() {
+    const modal = document.getElementById('chatbot-modal');
+    if (modal) {
+        modal.classList.remove('show');
+        modal.style.display = 'none';
+        console.log('Chatbot closed');
+    }
+}
+
+// Function to handle Enter key press in chat input
+function handleChatKeyPress(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        sendMessage();
     }
 }
 
@@ -1165,7 +1220,7 @@ if (document.fonts) {
     document.fonts.ready.then(ensureIconsVisible);
 }
 
-// Make functions globally available
+// Make functions globally available (must be at the end after all definitions)
 window.openChatbot = openChatbot;
 window.closeChatbot = closeChatbot;
 window.sendMessage = sendMessage;

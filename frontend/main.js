@@ -322,6 +322,98 @@ function initializeChecklistSystem() {
     });
 }
 
+// Offline data management functions
+function downloadOfflineData() {
+    console.log('Downloading offline data...');
+    
+    // Simulate data download
+    const offlineData = {
+        emergencyContacts: [
+            { name: 'Emergency Services', number: '911' },
+            { name: 'FEMA', number: '1-800-621-3362' },
+            { name: 'Red Cross', number: '1-800-733-2767' },
+            { name: 'Poison Control', number: '1-800-222-1222' }
+        ],
+        shelters: [
+            { name: 'Central High School', address: '123 Main St', distance: '0.8 miles' },
+            { name: 'Community Center', address: '456 Oak Ave', distance: '1.2 miles' },
+            { name: 'City Hall', address: '789 Pine St', distance: '1.5 miles' }
+        ],
+        evacuationRoutes: [
+            { name: 'Primary Route', path: 'Main St → Highway 101' },
+            { name: 'Secondary Route', path: 'Oak Ave → Route 66' },
+            { name: 'Emergency Route', path: 'Back roads → County Line' }
+        ],
+        firstAid: {
+            cpr: ['Check responsiveness', 'Call 911', 'Begin chest compressions', 'Give rescue breaths'],
+            bleeding: ['Apply direct pressure', 'Elevate injury', 'Use pressure points'],
+            choking: ['Heimlich maneuver', 'Back blows', 'Call 911 if unsuccessful']
+        },
+        timestamp: new Date().toISOString()
+    };
+    
+    // Save to localStorage
+    localStorage.setItem('offlineEmergencyData', JSON.stringify(offlineData));
+    
+    // Update UI
+    alert('Offline data downloaded successfully! You can now access emergency information without internet.');
+    loadOfflineData();
+}
+
+function clearOfflineData() {
+    console.log('Clearing offline data...');
+    
+    if (confirm('Are you sure you want to clear all offline data? You will need internet to download it again.')) {
+        localStorage.removeItem('offlineEmergencyData');
+        alert('Offline data cleared successfully.');
+        
+        // Update storage info
+        const storageItems = document.querySelectorAll('.storage-item');
+        storageItems.forEach(item => {
+            item.querySelector('i').className = 'fas fa-times-circle';
+            item.style.opacity = '0.5';
+        });
+    }
+}
+
+function refreshOfflineData() {
+    console.log('Refreshing offline data...');
+    downloadOfflineData();
+}
+
+function loadOfflineData() {
+    console.log('Loading offline data...');
+    
+    const offlineData = localStorage.getItem('offlineEmergencyData');
+    
+    if (offlineData) {
+        try {
+            const data = JSON.parse(offlineData);
+            console.log('Offline data loaded:', data);
+            
+            // Update storage info UI
+            const storageItems = document.querySelectorAll('.storage-item');
+            storageItems.forEach(item => {
+                item.querySelector('i').className = 'fas fa-check-circle';
+                item.style.opacity = '1';
+            });
+            
+            // Update timestamp if available
+            if (data.timestamp) {
+                const lastUpdate = document.querySelector('.last-update');
+                if (lastUpdate) {
+                    const date = new Date(data.timestamp);
+                    lastUpdate.textContent = `Last updated: ${date.toLocaleString()}`;
+                }
+            }
+        } catch (error) {
+            console.error('Error loading offline data:', error);
+        }
+    } else {
+        console.log('No offline data found');
+    }
+}
+
 function initializeOfflineMode() {
     // Check if service worker is supported
     if ('serviceWorker' in navigator) {
