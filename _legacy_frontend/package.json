@@ -1,0 +1,17 @@
+{
+  "name": "disaster-management-app",
+  "version": "1.0.0",
+  "description": "Disaster Management Chatbot Application",
+  "scripts": {
+    "build": "cd backend && npm install --production",
+    "start": "cd backend && npm start",
+    "dev": "cd backend && npm run dev",
+    "serve": "npx http-server . -p 3000 -o"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Adityashahhhwal/SIH-india2025.git"
+  },
+  "author": "SIH Team",
+  "license": "MIT"
+}
