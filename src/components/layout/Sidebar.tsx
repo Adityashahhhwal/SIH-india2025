@@ -117,11 +117,6 @@ export function Sidebar() {
     return (
         <>
             {DesktopSidebar}
-            {/* Mobile Header with Hamburger */}
-            <div className="flex items-center px-4 py-2 border-b border-border bg-card/50 md:hidden sticky top-0 z-30 backdrop-blur">
-                {MobileSidebar}
-                <span className="font-semibold text-lg">Command Center</span>
-            </div>
         </>
     );
 }
