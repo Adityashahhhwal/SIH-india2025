@@ -2,7 +2,7 @@ import { ChatWindow } from "@/components/chat/ChatWindow";
 
 export default function ChatPage() {
     return (
-        <div className="flex h-[calc(100vh-theme(spacing.20))] flex-col gap-4">
+        <div className="flex h-[calc(100dvh-theme(spacing.20))] flex-col gap-4">
             <div className="flex items-center justify-between border-b border-border pb-4">
                 <div>
                     <h1 className="text-2xl font-bold tracking-tight">AI Command Assistant</h1>

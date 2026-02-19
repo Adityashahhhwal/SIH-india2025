@@ -16,7 +16,7 @@ import {
     X
 } from "lucide-react";
 import { useState } from "react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 
 const sidebarItems = [
     { name: "Overview", href: "/monitor", icon: BarChart3 },
@@ -82,6 +82,8 @@ export function Sidebar() {
                 </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-64 p-0">
+                <SheetTitle className="sr-only">Dashboard Sidebar</SheetTitle>
+                <SheetDescription className="sr-only">Dashboard navigation links</SheetDescription>
                 <div className="flex h-full flex-col">
                     <div className="flex h-16 items-center border-b border-border px-6">
                         <Link href="/" className="flex items-center gap-2 font-bold text-xl" onClick={() => setIsOpen(false)}>

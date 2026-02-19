@@ -4,9 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Menu, ShieldAlert } from "lucide-react";
 import { useState } from "react";
+import { ModeToggle } from "@/components/ui/mode-toggle";
 
 const navItems = [
     { name: "Prepare", href: "/prepare" },
@@ -46,22 +47,27 @@ export function Navbar() {
                     ))}
                 </nav>
 
-                <div className="flex items-center gap-4">
-                    <div className="hidden md:block">
-                        <Button variant="destructive" size="sm" className="font-bold animate-pulse shadow-glow-critical">
-                            SOS EMERGENCY
-                        </Button>
-                    </div>
+                {/* Desktop Actions */}
+                <div className="hidden md:flex items-center gap-4">
+                    <ModeToggle />
+                    <Button variant="destructive" className="font-bold shadow-glow-critical animate-pulse-slow">
+                        SOS EMERGENCY
+                    </Button>
+                </div>
 
-                    {/* Mobile Menu */}
+                {/* Mobile Menu Toggle */}
+                <div className="flex items-center gap-2 md:hidden">
+                    <ModeToggle />
                     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-                        <SheetTrigger asChild className="md:hidden">
+                        <SheetTrigger asChild>
                             <Button variant="ghost" size="icon">
                                 <Menu className="h-6 w-6" />
                                 <span className="sr-only">Toggle menu</span>
                             </Button>
                         </SheetTrigger>
                         <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                            <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                            <SheetDescription className="sr-only">Main navigation links and emergency actions</SheetDescription>
                             <div className="flex flex-col gap-6 mt-6">
                                 <div className="flex flex-col gap-2">
                                     {navItems.map((item) => (

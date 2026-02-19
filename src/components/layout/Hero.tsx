@@ -6,7 +6,7 @@ import { AlertCircle, Shield, Map, BookOpen } from "lucide-react";
 
 export function Hero() {
     return (
-        <section className="relative overflow-hidden bg-background pt-16 pb-20 md:pt-24 md:pb-32">
+        <section className="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-32">
             <div className="container relative z-10 flex flex-col items-center text-center">
 
                 {/* Status Badge */}
@@ -27,7 +27,7 @@ export function Hero() {
                 </p>
 
                 {/* Action Grid ("What do I do right now?") */}
-                <div className="mt-10 grid w-full max-w-lg grid-cols-1 gap-4 sm:max-w-3xl sm:grid-cols-2 lg:grid-cols-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
+                <div className="mt-10 grid w-full max-w-lg grid-cols-2 gap-3 sm:max-w-3xl sm:gap-4 lg:grid-cols-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
 
                     <Link href="/respond" className="group">
                         <Button variant="destructive" className="w-full h-auto flex flex-col items-center gap-2 py-6 text-lg shadow-glow-critical hover:scale-105 transition-transform">

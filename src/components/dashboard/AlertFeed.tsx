@@ -1,48 +1,77 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-import { AlertCircle, Zap, AlertTriangle, CheckCircle2 } from "lucide-react";
+"use client";
 
-const alerts = [
-    { id: 1, type: "critical", message: "Flash flood warning issued for Sector 4.", time: "2m ago" },
-    { id: 2, type: "warning", message: "Heavy rainfall expected in next 2 hours.", time: "15m ago" },
-    { id: 3, type: "info", message: "Shelter B capacity updated to 85%.", time: "1h ago" },
-    { id: 4, type: "success", message: "Power restored in downtown area.", time: "2h ago" },
+import { cn } from "@/lib/utils";
+import { AlertTriangle, Info, CheckCircle, AlertCircle } from "lucide-react";
+import { useAlerts } from "@/hooks/use-api";
+import type { Alert } from "@/lib/api";
+
+const severityConfig: Record<string, { icon: typeof AlertTriangle; color: string; border: string }> = {
+    critical: { icon: AlertCircle, color: "text-destructive", border: "border-l-destructive" },
+    warning: { icon: AlertTriangle, color: "text-[#f59e0b]", border: "border-l-[#f59e0b]" },
+    info: { icon: Info, color: "text-[#38bdf8]", border: "border-l-[#38bdf8]" },
+    success: { icon: CheckCircle, color: "text-secondary", border: "border-l-secondary" },
+};
+
+// Fallback mock data for when backend is unavailable
+const fallbackAlerts: Alert[] = [
+    { _id: "1", type: "critical", message: "Flash Flood Warning: Mumbai coastal areas", source: "IMD", timestamp: new Date().toISOString(), expiresAt: "" },
+    { _id: "2", type: "warning", message: "Cyclone watch: Bay of Bengal, Category 2 expected", source: "NDMA", timestamp: new Date(Date.now() - 300000).toISOString(), expiresAt: "" },
+    { _id: "3", type: "info", message: "Shelter capacity update: 3 new shelters operational", source: "District Admin", timestamp: new Date(Date.now() - 600000).toISOString(), expiresAt: "" },
+    { _id: "4", type: "success", message: "Rescue operation complete: Sector 7 cleared", source: "NDRF", timestamp: new Date(Date.now() - 900000).toISOString(), expiresAt: "" },
+    { _id: "5", type: "warning", message: "Heavy rainfall expected in Uttarakhand", source: "IMD", timestamp: new Date(Date.now() - 1200000).toISOString(), expiresAt: "" },
 ];
 
+function formatTime(timestamp: string) {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diff = now.getTime() - date.getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return "Just now";
+    if (mins < 60) return `${mins}m ago`;
+    const hours = Math.floor(mins / 60);
+    if (hours < 24) return `${hours}h ago`;
+    return date.toLocaleDateString();
+}
+
 export function AlertFeed() {
-    return (
-        <div className="rounded-xl border border-border bg-card shadow-sm h-full flex flex-col">
-            <div className="flex items-center justify-between p-4 border-b border-border">
-                <h3 className="font-semibold leading-none tracking-tight flex items-center gap-2">
-                    <Zap className="h-4 w-4 text-warning" />
-                    Live Alerts
-                </h3>
-                <Badge variant="outline" className="text-xs font-mono">LIVE</Badge>
+    const { data: alerts, isLoading } = useAlerts(10);
+    const displayAlerts = alerts && alerts.length > 0 ? alerts : fallbackAlerts;
+
+    if (isLoading) {
+        return (
+            <div className="space-y-3" role="status" aria-label="Loading alerts">
+                {[...Array(4)].map((_, i) => (
+                    <div key={i} className="h-16 rounded-lg bg-muted/30 animate-pulse" />
+                ))}
             </div>
-            <ScrollArea className="flex-1">
-                <div className="flex flex-col">
-                    {alerts.map((alert) => (
-                        <div key={alert.id} className={cn(
-                            "flex items-start gap-3 p-4 border-b border-border/50 hover:bg-muted/50 transition-colors cursor-pointer group",
-                            alert.type === "critical" && "bg-destructive/5 hover:bg-destructive/10"
-                        )}>
-                            <div className="mt-0.5">
-                                {alert.type === "critical" && <AlertCircle className="h-4 w-4 text-destructive animate-pulse" />}
-                                {alert.type === "warning" && <AlertTriangle className="h-4 w-4 text-warning" />}
-                                {alert.type === "info" && <AlertCircle className="h-4 w-4 text-primary" />}
-                                {alert.type === "success" && <CheckCircle2 className="h-4 w-4 text-success" />}
-                            </div>
-                            <div className="flex-1 space-y-1">
-                                <p className="text-sm font-medium leading-none group-hover:text-foreground transition-colors">
-                                    {alert.message}
-                                </p>
-                                <p className="text-xs text-muted-foreground">{alert.time}</p>
+        );
+    }
+
+    return (
+        <div className="space-y-3" role="log" aria-live="polite" aria-label="Real-time alert feed">
+            {displayAlerts.map((alert) => {
+                const config = severityConfig[alert.type] || severityConfig.info;
+                const Icon = config.icon;
+                return (
+                    <div
+                        key={alert._id}
+                        className={cn(
+                            "flex items-start gap-3 rounded-lg border-l-4 bg-muted/20 p-3 transition-colors hover:bg-muted/40",
+                            config.border
+                        )}
+                    >
+                        <Icon className={cn("h-4 w-4 mt-0.5 shrink-0", config.color)} />
+                        <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium leading-snug">{alert.message}</p>
+                            <div className="flex items-center gap-2 mt-1">
+                                <span className="text-xs text-muted-foreground">{alert.source}</span>
+                                <span className="text-xs text-muted-foreground">•</span>
+                                <span className="text-xs text-muted-foreground font-mono">{formatTime(alert.timestamp)}</span>
                             </div>
                         </div>
-                    ))}
-                </div>
-            </ScrollArea>
+                    </div>
+                );
+            })}
         </div>
     );
 }

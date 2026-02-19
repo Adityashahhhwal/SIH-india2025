@@ -1,7 +1,7 @@
 @import "tailwindcss";
-@import "shadcn/tailwind.css";
 
-@plugin "tailwindcss-animate";
+
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -41,48 +41,51 @@
 :root {
   --radius: 0.625rem;
 
-  /* Backgrounds */
-  --background: #0f1419;
-  /* Deep Charcoal */
-  --foreground: #f1f5f9;
-  /* Hologram White */
+  /* Light Mode (Vibrant Command Center) */
+  --background: #f8fafc;
+  --bg-image: radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0%, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(0, 212, 170, 0.15) 0%, transparent 50%);
+
+  --foreground: #0f172a;
+  /* Slate 900 */
 
   /* Cards */
-  --card: #1a2332;
-  /* Radar Slate */
-  --card-foreground: #f1f5f9;
+  --card: rgba(255, 255, 255, 0.8);
+  --card-foreground: #0f172a;
 
   /* Popovers */
-  --popover: #1a2332;
-  --popover-foreground: #f1f5f9;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
 
   /* Primary (Action) */
   --primary: #ff6b35;
-  /* Safety Orange */
+  /* Safety Orange - unchanged */
   --primary-foreground: #ffffff;
 
-  /* Secondary (Safe/Success - Electric Teal) */
+  /* Secondary (Safe/Success) */
   --secondary: #00d4aa;
+  /* Electric Teal */
   --secondary-foreground: #ffffff;
 
   /* Muted */
-  --muted: #1a2332;
-  --muted-foreground: #94a3b8;
-  /* Tactical Gray */
+  --muted: #e2e8f0;
+  /* Slate 200 */
+  --muted-foreground: #64748b;
+  /* Slate 500 */
 
   /* Accent */
-  --accent: #243447;
-  /* Steel Blue */
-  --accent-foreground: #f1f5f9;
+  --accent: #f1f5f9;
+  /* Slate 100 */
+  --accent-foreground: #0f172a;
 
-  /* Destructive (Critical) */
+  /* Destructive */
   --destructive: #ef4444;
-  /* Alert Red */
   --destructive-foreground: #ffffff;
 
   /* Borders & Inputs */
-  --border: rgba(148, 163, 184, 0.2);
-  --input: rgba(148, 163, 184, 0.2);
+  --border: #cbd5e1;
+  /* Slate 300 - better visibility */
+  --input: #cbd5e1;
   --ring: #ff6b35;
 
   /* Charts */
@@ -94,25 +97,44 @@
 }
 
 .dark {
-  --background: #0f1419;
-  --foreground: #f1f5f9;
-  --card: #1a2332;
-  --card-foreground: #f1f5f9;
-  --popover: #1a2332;
-  --popover-foreground: #f1f5f9;
+  /* Dark Mode (High Contrast / True Black) */
+  --background: #000000;
+  /* Pure Black as requested */
+  background-image: none;
+  /* Disable light mode gradients */
+  --foreground: #f8fafc;
+  /* Slate 50 */
+
+  --card: #09090b;
+  /* Zinc 950 - slightly lighter than black for depth */
+  --card-foreground: #f8fafc;
+
+  --popover: #09090b;
+  --popover-foreground: #f8fafc;
+
   --primary: #ff6b35;
   --primary-foreground: #ffffff;
+
   --secondary: #00d4aa;
   --secondary-foreground: #ffffff;
-  --muted: #1a2332;
+
+  --muted: #1e293b;
+  /* Slate 800 */
   --muted-foreground: #94a3b8;
-  --accent: #243447;
-  --accent-foreground: #f1f5f9;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: rgba(148, 163, 184, 0.2);
-  --input: rgba(148, 163, 184, 0.2);
+  /* Slate 400 */
+
+  --accent: #1e293b;
+  --accent-foreground: #f8fafc;
+
+  --destructive: #7f1d1d;
+  /* Darker Red for dark mode comfort */
+  --destructive-foreground: #fecaca;
+
+  --border: #27272a;
+  /* Zinc 800 */
+  --input: #27272a;
   --ring: #ff6b35;
+
   --chart-1: #ff6b35;
   --chart-2: #00d4aa;
   --chart-3: #3b82f6;

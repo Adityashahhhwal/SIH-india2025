@@ -17,8 +17,18 @@ export function ChecklistItem({ id, label, subtext, isCompleted = false }: Check
     return (
         <div
             onClick={() => setChecked(!checked)}
+            onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setChecked(!checked);
+                }
+            }}
+            role="checkbox"
+            aria-checked={checked}
+            aria-label={label}
+            tabIndex={0}
             className={cn(
-                "flex items-start gap-4 rounded-xl border p-4 transition-all cursor-pointer select-none",
+                "flex items-start gap-4 rounded-xl border p-4 transition-all cursor-pointer select-none focus:outline-none focus:ring-2 focus:ring-ring",
                 checked
                     ? "bg-secondary/10 border-secondary"
                     : "bg-card border-border hover:bg-accent/50"
