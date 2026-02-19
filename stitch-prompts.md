@@ -4,35 +4,35 @@ Use these prompts with Stitch to generate the core UI components. They are calib
 
 ## 1. Hero / Landing Page
 **Prompt:**
-> Create a high-stakes, futuristic landing page for a specialized Disaster Management AI. 
-> **Visual Style:** Dark mode, command center aesthetic. Background should be deep void black (#0f1419) with a subtle, pulsing radar-sweep effect overlay.
-> **Typography:** Large, authoritative Inter Bold headings in white (#f1f5f9). 
+> Create a high-stakes, professional landing page for a Disaster Management AI.
+> **Visual Style:** Light mode, "Oceanic Clarity" aesthetic. Background should be soft coastal white (#ebf4f6) with subtle teal accents.
+> **Typography:** Large, authoritative Inter Bold headings in Slate Black (#0f172a).
 > **Layout:**
-> 1. **Navbar:** Glassmorphism top bar with logo "DisasterAI" (shield icon), navigation links (Prepare, Monitor, Respond), and a pulsing red "SOS" button on the right.
-> 2. **Hero Section:** Center alignment. Headline: "AI-Powered Disaster Response Navigator". Sub-headline in slate gray. Two primary call-to-action buttons: "View Predictions" (Safety Orange pill shape) and "Live Map" (Ghost button with blue borders).
-> 3. **Visual:** A central "holographic" globe or map visualization made of glowing dots (cyan/teal) to the right or center.
-> **Components:** Use bento-grid style cards for "Active Alerts" below the hero, with glassmorphism backgrounds and glowing borders for critical alerts.
+> 1. **Navbar:** Glassmorphism white top bar with logo "DisasterAI", navigation links, and a pulsing red "SOS" button.
+> 2. **Hero Section:** Center alignment. Headline: "AI-Powered Disaster Response Navigator". Sub-headline in teal-muted. Two primary call-to-action buttons: "View Predictions" (Solid Deep Ocean Blue) and "Live Map" (Outline Teal).
+> 3. **Visual:** A central clean map visualization or illustration in teal/blue tones.
+> **Components:** Use bento-grid style cards for "Active Alerts" below the hero, with white backgrounds, teal borders, and clear typography.
 
 ## 2. Mission Control Dashboard (Monitor Page)
 **Prompt:**
 > Design a dense, data-rich "Mission Control" dashboard for monitoring natural disasters.
-> **Visual Layout:** 12-column grid. Everything contained in "Bento Box" glass panels (`bg-slate-900/60`, `backdrop-blur`).
+> **Visual Layout:** 12-column grid. Everything contained in "Bento Box" panels with clean white backgrounds and soft teal borders (`border-teal-200`).
 > **Key Sections:**
-> 1. **Sidebar:** Thin vertical icon rail on the left (Home, Map, Alerts, Settings). Active state glows Electric Teal.
-> 2. **Main Feed (Center-Left):** "Live Alerts" feed. Each item is a compact card. Critical alerts have a red left-border and faint red background glow. Icons should be specific (hurricane, fire, flood).
-> 3. **Map Widget (Right, Large):** A large rectangular map preview showing dark mode map with animated "pulse" rings at disaster coordinates.
+> 1. **Sidebar:** Thin vertical icon rail on the left (Home, Map, Alerts, Settings). Active state uses Deep Ocean Blue background.
+> 2. **Main Feed (Center-Left):** "Live Alerts" feed. Cards are white with shadow. Critical alerts have a red left-border. Icons are clear and colored.
+> 3. **Map Widget (Right, Large):** A large rectangular map preview showing a detailed light-mode relief map with pulsing teal rings at disaster coordinates.
 > 4. **Stats Row (Top):** 4 small cards showing: "Active Hazards" (12), "Shelters Open" (85%), "People Assisted" (1,240), "System Status" (green dot "Online").
-> **Typography:** Use JetBrains Mono for all numbers and timestamps.
+> **Typography:** Use JetBrains Mono for all numbers and timestamps. Text is Slate Black (#0f172a).
 
 ## 3. Interactive Map Overlay (Respond Page)
 **Prompt:**
 > Create a sophisticated map interface UI overlay.
-> **Context:** The background is a full-screen dark map. The UI floats on top.
+> **Context:** The background is a full-screen light-mode topographic map. The UI floats on top.
 > **Elements:**
-> 1. **Search Bar (Top Left):** Floating glass bar with "Search location or coordinates...".
-> 2. **Filter Chips (Top Center):** Pill-shaped toggles for "Shelters", "Hazards", "Hospitals", "Police". Active chips are filled Signal Blue.
-> 3. **Detail Panel (Right):** A slide-out glass drawer showing details for a selected hazard. Includes: Title "flood Warning", Severity Level (Critical - Red), "Time to Impact" countdown (JetBrains Mono), and "Evacuation Route" button (Safety Orange).
-> 4. **Bottom Bar:** Scrubber/timeline to see predictions over the next 24 hours.
+> 1. **Search Bar (Top Left):** Floating white bar with shadow.
+> 2. **Filter Chips (Top Center):** Pill-shaped toggles. Active chips are filled Deep Ocean Blue.
+> 3. **Detail Panel (Right):** A slide-out white sheet showing details. Includes: Title "Flood Warning", Severity Level (Critical - Red), "Time to Impact" countdown, and "Evacuation Route" button (Solid Deep Ocean Blue).
+> 4. **Bottom Bar:** Scrubber/timeline to see predictions. White background with teal controls.
 
 ## 4. Mobile Emergency View
 **Prompt:**

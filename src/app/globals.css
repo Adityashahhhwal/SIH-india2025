@@ -41,16 +41,14 @@
 :root {
   --radius: 0.625rem;
 
-  /* Light Mode (Vibrant Command Center) */
-  --background: #f8fafc;
-  --bg-image: radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0%, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(0, 212, 170, 0.15) 0%, transparent 50%);
+  /* Light Mode (Oceanic Teal Palette) */
+  --background: #ebf4f6;
+  --bg-image: none;
 
   --foreground: #0f172a;
-  /* Slate 900 */
 
   /* Cards */
-  --card: rgba(255, 255, 255, 0.8);
+  --card: #ffffff;
   --card-foreground: #0f172a;
 
   /* Popovers */
@@ -58,42 +56,36 @@
   --popover-foreground: #0f172a;
 
   /* Primary (Action) */
-  --primary: #ff6b35;
-  /* Safety Orange - unchanged */
-  --primary-foreground: #ffffff;
+  --primary: #09637e;
+  --primary-foreground: #ebf4f6;
 
   /* Secondary (Safe/Success) */
-  --secondary: #00d4aa;
-  /* Electric Teal */
-  --secondary-foreground: #ffffff;
+  --secondary: #7ab2b2;
+  --secondary-foreground: #0f172a;
 
   /* Muted */
-  --muted: #e2e8f0;
-  /* Slate 200 */
-  --muted-foreground: #64748b;
-  /* Slate 500 */
+  --muted: #7ab2b2;
+  --muted-foreground: #475569;
 
   /* Accent */
-  --accent: #f1f5f9;
-  /* Slate 100 */
-  --accent-foreground: #0f172a;
+  --accent: #088395;
+  --accent-foreground: #ebf4f6;
 
   /* Destructive */
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
 
   /* Borders & Inputs */
-  --border: #cbd5e1;
-  /* Slate 300 - better visibility */
-  --input: #cbd5e1;
-  --ring: #ff6b35;
+  --border: #7ab2b2;
+  --input: #7ab2b2;
+  --ring: #088395;
 
   /* Charts */
-  --chart-1: #ff6b35;
-  --chart-2: #00d4aa;
-  --chart-3: #3b82f6;
-  --chart-4: #ef4444;
-  --chart-5: #f59e0b;
+  --chart-1: #09637e;
+  --chart-2: #088395;
+  --chart-3: #7ab2b2;
+  --chart-4: #2a9d8f;
+  --chart-5: #164e63;
 }
 
 .dark {

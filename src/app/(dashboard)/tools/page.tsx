@@ -118,8 +118,8 @@ export default function ToolsPage() {
             {/* Language Selection */}
             <section>
                 <div className="flex items-center gap-2 mb-4">
-                    <div className="p-2 rounded-lg bg-[#3b82f6]/10">
-                        <Languages className="h-5 w-5 text-[#3b82f6]" />
+                    <div className="p-2 rounded-lg bg-primary/10">
+                        <Languages className="h-5 w-5 text-primary" />
                     </div>
                     <h2 className="text-xl font-semibold">Language</h2>
                 </div>

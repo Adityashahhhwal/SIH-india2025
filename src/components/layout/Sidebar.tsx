@@ -76,12 +76,12 @@ export function Sidebar() {
     const MobileSidebar = (
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden">
+                <Button variant="ghost" size="icon" className="mr-2">
                     <Menu className="h-6 w-6" />
                     <span className="sr-only">Toggle sidebar</span>
                 </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-64 p-0">
+            <SheetContent side="left" className="w-64 p-0 border-r border-border bg-card">
                 <SheetTitle className="sr-only">Dashboard Sidebar</SheetTitle>
                 <SheetDescription className="sr-only">Dashboard navigation links</SheetDescription>
                 <div className="flex h-full flex-col">
@@ -117,7 +117,11 @@ export function Sidebar() {
     return (
         <>
             {DesktopSidebar}
-            {/* Mobile Trigger is usually placed in a PageHeader, this component exports the structure */}
+            {/* Mobile Header with Hamburger */}
+            <div className="flex items-center px-4 py-2 border-b border-border bg-card/50 md:hidden sticky top-0 z-30 backdrop-blur">
+                {MobileSidebar}
+                <span className="font-semibold text-lg">Command Center</span>
+            </div>
         </>
     );
 }

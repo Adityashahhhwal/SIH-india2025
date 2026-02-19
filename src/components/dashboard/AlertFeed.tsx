@@ -8,7 +8,7 @@ import type { Alert } from "@/lib/api";
 const severityConfig: Record<string, { icon: typeof AlertTriangle; color: string; border: string }> = {
     critical: { icon: AlertCircle, color: "text-destructive", border: "border-l-destructive" },
     warning: { icon: AlertTriangle, color: "text-[#f59e0b]", border: "border-l-[#f59e0b]" },
-    info: { icon: Info, color: "text-[#38bdf8]", border: "border-l-[#38bdf8]" },
+    info: { icon: Info, color: "text-accent", border: "border-l-accent" },
     success: { icon: CheckCircle, color: "text-secondary", border: "border-l-secondary" },
 };
 

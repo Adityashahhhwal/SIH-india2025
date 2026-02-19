@@ -1,32 +1,31 @@
 # Design System: SIH-India2025 Command Center
 
 ## 1. Visual Theme & Atmosphere
-**"Futuristic Command Center"** meets **"High-Stakes Utility"**
+**"Oceanic Clarity"** meets **"Emergency Response"**
 
-The design communicates urgency, precision, and authority. It feels like a modern SaaS dashboard used by emergency responders in a sci-fi near-future.
-- **Mood:** Sophisticated, dark, data-dense, trustworthy.
-- **Lighting:** Dark mode default. "Holographic" glowing accents on critical elements (alerts, live status).
-- **Depth:** Deep background layers with glassmorphism (frosted glass) overlays to separate content without blocking context.
-- **Density:** High data density. Utilizes "Bento Grid" layouts to organize complex information efficiently.
+The design communicates calmness, clarity, and precision. It uses a clean light mode by default with deep teal accents to convey trust and stability during crises.
+- **Mood:** Clean, professional, humanitarian, trustworthy.
+- **Lighting:** Light mode default. High contrast text (#09637e) on soft white backgrounds (#ebf4f6).
+- **Depth:** Subtle shadows and clean borders. "Glass" effects are used sparingly for overlays.
+- **Density:** High data density but with breathing room (airy layouts).
 
 ## 2. Color Palette & Roles
 
 ### Backgrounds & Surfaces
-- **Void Black (#0f1419):** Main application background. Deep and receding.
-- **Radar Slate (#1a2332):** Secondary background for sidebars and panels.
-- **Glass Panel (rgba(30, 41, 59, 0.7)):** For cards and overlays. Used with `backdrop-filter: blur(12px)`.
+- **Coastal White (#ebf4f6):** Main application background. Soft, easier on the eyes than pure white.
+- **Pure White (#ffffff):** Card backgrounds, panels, and popovers.
+- **Surface Overlay (rgba(255, 255, 255, 0.9)):** Glass panels.
 
 ### Functional Colors
-- **Safety Orange (#ff6b35):** primary-action. Used for main CTAs ("Get Help", "SOS"), critical warnings, and focused states. High visibility.
-- **Electric Teal (#00d4aa):** success. Used for "Safe" statuses, "active" indicators, and positive data trends.
-- **Signal Blue (#3b82f6):** info/accent. Used for map markers, navigation links, and neutral information.
-- **Alert Red (#ef4444):** destructive/critical. Used for "Danger" zones, error states, and immediate evacuation orders. Warning glows.
-- **Caution Amber (#f59e0b):** warning. Used for "Watch" advisories and moderate risks.
+- **Deep Ocean (#09637e):** primary/foreground. Used for main text, primary buttons (solid), and headers.
+- **Lagoon Teal (#088395):** accent/ring. Used for active states, focus rings, and highlighted icons.
+- **Reef Green (#7ab2b2):** secondary/muted. Used for secondary buttons, borders, and muted text.
+- **Alert Red (#ef4444):** destructive. Used for "Danger" zones and errors. (Standard semantic red).
+- **Amber Warning (#f59e0b):** warning. (Standard semantic amber).
 
 ### Text Colors
-- **Hologram White (#f1f5f9):** text-primary. High contrast headers and key data values.
-- **Tactical Gray (#94a3b8):** text-secondary. UI labels, body text, and descriptions.
-- **Muted Steer (#64748b):** text-muted. Timestamps, footnotes, and inactive icons.
+- **Slate Black (#0f172a):** text-foreground. Headings and body text. High contrast for readability.
+- **Teal Muted (#088395):** text-muted. Labels and secondary info.
 
 ## 3. Typography Rules
 
