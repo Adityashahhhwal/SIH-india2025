@@ -13,7 +13,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: OPENAI_API_KEY
-        value: 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
+        value: your-openrouter-api-key-here
       - key: OPENAI_BASE_URL
         value: https://openrouter.ai/api/v1
       - key: OPENAI_MODEL

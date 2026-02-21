@@ -76,6 +76,8 @@ yarn-error.log*
 
 # env files
 .env*
+*.mcp.json
+mcp.config.json
 
 # vercel
 .vercel
