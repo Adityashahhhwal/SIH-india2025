@@ -36,8 +36,14 @@
       }
     },
     "vercel": {
-      "type": "http",
-      "url": "https://mcp.vercel.com"
+      "command": "npx",
+      "args": [
+        "-y",
+        "@vercel/mcp"
+      ],
+      "env": {
+        "VERCEL_TOKEN": ""
+      }
     }
   }
 }
