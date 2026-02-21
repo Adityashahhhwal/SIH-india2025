@@ -65,7 +65,7 @@ export function ChatWindow() {
                 const botMsg: Message = {
                     id: (Date.now() + 1).toString(),
                     role: "assistant",
-                    content: data.reply || data.message || "I'm sorry, I couldn't process that request.",
+                    content: data.botMessage || data.reply || data.message || "I'm sorry, I couldn't process that request.",
                 };
                 setMessages((prev) => [...prev, botMsg]);
             },

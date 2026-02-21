@@ -57,6 +57,9 @@ export interface ChatResponse {
     reply?: string;
     message?: string;
     error?: string;
+    botMessage?: string;
+    userMessage?: string;
+    fallback?: boolean;
 }
 
 // --- Fetch Functions ---

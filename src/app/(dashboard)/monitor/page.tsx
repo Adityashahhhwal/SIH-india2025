@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { StatsCard } from "@/components/dashboard/StatsCard";
 import { AlertFeed } from "@/components/dashboard/AlertFeed";
 import { CapacityBar } from "@/components/dashboard/CapacityBar";
@@ -73,8 +75,11 @@ export default function MonitorPage() {
 
                 {/* Live Alerts Feed */}
                 <Card className="lg:col-span-3 border-border/50 bg-card/50">
-                    <CardHeader>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
                         <CardTitle>Real-time Feed</CardTitle>
+                        <Link href="/monitor/alerts" className="text-sm font-medium text-primary hover:underline">
+                            View all
+                        </Link>
                     </CardHeader>
                     <CardContent>
                         <AlertFeed />
