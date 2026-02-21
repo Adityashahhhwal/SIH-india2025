@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { OfflineIndicator } from "@/components/layout/OfflineIndicator";
 import { Navbar } from "@/components/layout/Navbar";
 import { MobileEmergencyBar } from "@/components/layout/MobileEmergencyBar";
+import { ChatWidget } from "@/components/chat/ChatWidget";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -57,6 +58,7 @@ export default function RootLayout({
               </main>
               <MobileEmergencyBar />
             </div>
+            <ChatWidget />
             <OfflineIndicator />
           </Providers>
         </ThemeProvider>
