@@ -26,4 +26,9 @@ When answering prompts or writing code, adhere strictly to the following MCP usa
 - **Always** use the `sequential-thinking` server tools for deep analytical tasks, complex debugging, or architecting multi-step solutions. Use it to map out your thought process dynamically and revise it as you encounter new information.
 - Example triggers: "Help me debug this complex routing error", "Plan the architecture for the new authentication service", etc.
 
+## 5. Vercel MCP Server
+- **Always** use the `vercel` MCP server tools for deployment, environment variable management, and Vercel platform operations.
+- Use `vercel-mcp` to deploy applications, check deployment status, or manage project settings.
+- Example triggers: "Deploy this application to Vercel", "Check the status of my last deployment", etc.
+
 **General Rule:** If an MCP server provides a tool that simplifies, improves accuracy, or automates a step of the user's request, you are expected to use it as your first course of action.
